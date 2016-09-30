@@ -103,7 +103,7 @@ def extract_JK(pos_seq):
     ngrams = filter(lambda x: stringify(x) in patterns, ngrams)
     return [set(positionify(n)) for n in ngrams]
 
-def get_stdeng_nltk_tagger():
+def get_stdeng_nltk_tagger(suppress_errors=True):
     class NLTKTagger:
         # http://www.nltk.org/book/ch05.html
         def tag_text(self, text):
@@ -117,15 +117,14 @@ def get_stdeng_nltk_tagger():
         import nltk
         _toks = nltk.word_tokenize("The red cat.")
         _tags = nltk.pos_tag(_toks)
-        # logmsg("Loaded NLTK POS tagger.")
         return NLTKTagger()
     except ImportError:
-        pass
+        if not suppress_errors: raise
     except LookupError:
-        pass
+        if not suppress_errors: raise
     return None
 
-def get_stdeng_spacy_tagger():
+def get_stdeng_spacy_tagger(suppress_errors=True):
     class SpacyTagger:
         # https://spacy.io/
         def tag_text(self, text):
@@ -137,19 +136,18 @@ def get_stdeng_spacy_tagger():
         spacy_object = spacy.load('en', parser=False, entity=False)
         assert False, "todo finish implementing spacy wrapper for POS tags"
     except ImportError:
-        pass
+        if not suppress_errors: raise
     except RuntimeError:
         ## this seems to happen if the 'en' model is not installed. it might
         ## look like this:
         # RuntimeError: Model 'en' not installed. Please run 'python -m spacy.en.download' to install latest compatible model.
-        pass
+        if not suppress_errors: raise
     return None
 
 def get_stdeng_tagger():
     """Try to load a standard English POS tagger.  (As opposed to tweets-English.)"""
     tagger = get_stdeng_spacy_tagger()
     if tagger: 
-        logmsg("Using spaCy POS tagger.")
         return tagger
     tagger = get_stdeng_nltk_tagger()
     if tagger: 

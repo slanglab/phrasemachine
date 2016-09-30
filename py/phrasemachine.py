@@ -103,7 +103,28 @@ def extract_JK(pos_seq):
     ngrams = filter(lambda x: stringify(x) in patterns, ngrams)
     return [set(positionify(n)) for n in ngrams]
 
-def get_stdeng_nltk_tagger(suppress_errors=True):
+########
+
+def unicodify(s, encoding='utf8', errors='ignore'):
+    # Force conversion to unicode
+    if isinstance(s,unicode): return s
+    if isinstance(s,str): return s.decode(encoding, errors)
+    return unicode(s)
+
+def safejoin(list_of_str_or_unicode):
+    ## can accept a list of str objects, or a list of unicodes.
+    ## safely joins them, returning the same type.
+    xx = list_of_str_or_unicode
+    if not xx:
+        return u""
+    if isinstance(xx[0],str):
+        return ' '.join(xx)
+    if isinstance(xx[0],unicode):
+        return u' '.join(xx)
+
+#########
+
+def get_stdeng_nltk_tagger(suppress_errors=False):
     class NLTKTagger:
         # http://www.nltk.org/book/ch05.html
         def tag_text(self, text):
@@ -124,17 +145,35 @@ def get_stdeng_nltk_tagger(suppress_errors=True):
         if not suppress_errors: raise
     return None
 
-def get_stdeng_spacy_tagger(suppress_errors=True):
-    class SpacyTagger:
-        # https://spacy.io/
-        def tag_text(self, text):
-            assert False, "todo implement spacy wrapper"
-        def tag_tokens(self, text):
-            assert False, "todo implement spacy wrapper"
+SPACY_WRAPPER = None
+
+class SpacyTagger:
+    # https://spacy.io/
+    def __init__(self):
+        self.spacy_object = None
+    def tag_text(self, text):
+        text = unicodify(text)
+        doc = self.spacy_object(text)
+        return {
+            'pos': [token.tag_ for token in doc],
+            'tokens': [token.text for token in doc],
+        }
+    def tag_tokens(self, tokens):
+        # tokens: a list of strings
+        # todo: would be better to force spacy to use the given tokenization
+        newtext = safejoin(tokens)
+        newtext = unicodify(newtext) ## spacy wants unicode objects only. problem if user gave us a string.
+        return self.tag_text(newtext)
+
+def get_stdeng_spacy_tagger(suppress_errors=False):
+    global SPACY_WRAPPER
+    if SPACY_WRAPPER is not None:
+        return SPACY_WRAPPER
     try:
         import spacy
-        spacy_object = spacy.load('en', parser=False, entity=False)
-        assert False, "todo finish implementing spacy wrapper for POS tags"
+        SPACY_WRAPPER = SpacyTagger()
+        SPACY_WRAPPER.spacy_object = spacy.load('en', parser=False, entity=False)
+        return SPACY_WRAPPER
     except ImportError:
         if not suppress_errors: raise
     except RuntimeError:
@@ -146,26 +185,20 @@ def get_stdeng_spacy_tagger(suppress_errors=True):
 
 def get_stdeng_tagger():
     """Try to load a standard English POS tagger.  (As opposed to tweets-English.)"""
-    tagger = get_stdeng_spacy_tagger()
+    tagger = get_stdeng_spacy_tagger(True)
     if tagger: 
         return tagger
-    tagger = get_stdeng_nltk_tagger()
+    tagger = get_stdeng_nltk_tagger(True)
     if tagger: 
         return tagger
     # Failed to find any installed POS taggers
     return None
 
-def safejoin(list_of_str_or_unicode):
-    ## can accept a list of str objects, or a list of unicodes.
-    ## safely joins them, returning the same type.
-    xx = list_of_str_or_unicode
-    if not xx:
-        return u""
-    if isinstance(xx[0],str):
-        return ' '.join(xx)
-    if isinstance(xx[0],unicode):
-        return u' '.join(xx)
-
+TAGGER_NAMES = {
+    'nltk': get_stdeng_nltk_tagger,
+    'spacy': get_stdeng_spacy_tagger,
+    # 'twitter': None,
+}
 def get_phrases(text=None, tokens=None, postags=None, tagger=None, grammar='SimpleNP', regex=None, include_unigrams=False, output='counts'):
     """Give a text (or POS tag sequence), return the phrases matching the given
     grammar.  Works on documents or sentences.  
@@ -200,12 +233,12 @@ def get_phrases(text=None, tokens=None, postags=None, tagger=None, grammar='Simp
     if postags is None:
         if tagger is None:
             tagger = get_stdeng_tagger()
-        elif tagger=='twitter':
-            assert False, "todo load ark tagger"
-        else:
-            raise Exception("Couldn't find tagger corresponding to: %s" % tagger)
-        if tagger is None:
-            raise Exception("Couldn't find an installed POS tagger.  Try installing the NLTK English POS tagger (or another that this package supports)")
+            if tagger is None:
+                raise Exception("Couldn't find an installed POS tagger.  Try installing the NLTK English POS tagger (or another that this package supports)")
+        elif isinstance(tagger, (str,unicode)):
+            assert tagger in TAGGER_NAMES, "We don't support tagger %s" % tagger
+            tagger = TAGGER_NAMES[tagger]()
+        # otherwise, assume it's one of our wrapper *Tagger objects
 
         d = None
         if tokens is not None:

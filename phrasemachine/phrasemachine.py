@@ -183,23 +183,13 @@ def get_stdeng_spacy_tagger(suppress_errors=False):
         if not suppress_errors: raise
     return None
 
-def get_stdeng_tagger():
-    """Try to load a standard English POS tagger.  (As opposed to tweets-English.)"""
-    tagger = get_stdeng_spacy_tagger(True)
-    if tagger: 
-        return tagger
-    tagger = get_stdeng_nltk_tagger(True)
-    if tagger: 
-        return tagger
-    # Failed to find any installed POS taggers
-    return None
-
 TAGGER_NAMES = {
     'nltk': get_stdeng_nltk_tagger,
     'spacy': get_stdeng_spacy_tagger,
     # 'twitter': None,
 }
-def get_phrases(text=None, tokens=None, postags=None, tagger=None, grammar='SimpleNP', regex=None, include_unigrams=False, output='counts'):
+
+def get_phrases(text=None, tokens=None, postags=None, tagger='nltk', grammar='SimpleNP', regex=None, include_unigrams=False, output='counts'):
     """Give a text (or POS tag sequence), return the phrases matching the given
     grammar.  Works on documents or sentences.  
     Returns a dict with one or more keys with the phrase information.
@@ -231,11 +221,7 @@ def get_phrases(text=None, tokens=None, postags=None, tagger=None, grammar='Simp
 
     ## try to get values for both 'postags' and 'tokens', parallel lists of strings
     if postags is None:
-        if tagger is None:
-            tagger = get_stdeng_tagger()
-            if tagger is None:
-                raise Exception("Couldn't find an installed POS tagger.  Try installing the NLTK English POS tagger (or another that this package supports)")
-        elif isinstance(tagger, (str,unicode)):
+        if isinstance(tagger, (str,unicode)):
             assert tagger in TAGGER_NAMES, "We don't support tagger %s" % tagger
             tagger = TAGGER_NAMES[tagger]()
         # otherwise, assume it's one of our wrapper *Tagger objects

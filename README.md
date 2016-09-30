@@ -15,9 +15,12 @@ TODO
 
 #### Special configurations  
 
+phrasemachine depends on the ``spacy'' package for part-of-speech tagging. You can also use tagging from NLTK. Or provide a custom part of speech tagging.
+
+TODO:
 - tokenization
 - custom regex
-- pos tagging
+- custom pos tagging
 
 #### Natural language processing
 

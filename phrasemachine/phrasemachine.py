@@ -257,6 +257,7 @@ def get_phrases(text=None, tokens=None, postags=None, tagger='nltk', grammar='Si
         return x in output
 
     ret = {}
+    ret['num_tokens'] = len(postags)
     if retopt('token_spans'):
         ret['token_spans'] = phrase_tokspans
     if retopt('counts'):

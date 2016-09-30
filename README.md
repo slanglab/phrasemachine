@@ -1,6 +1,6 @@
 Have you ever tried using word counts to analyze a collection of documents? You probably noticed that there were important concepts that could not be represented with single words (''unigrams''). The words ''social'' and ''security'' don't fully represent the concept ''social security''; the words ''New'' and ''York'' don't really represent ''New York.'' Phrasemachine identifies these sort of multiword phrases automatically.
 
-    import phrasemachine
+    from phrasemachine import phrasemachine
     text = "Barack Obama supports expanding social security."
     print phrasemachine.get_phrases(text)
     {'counts': Counter({'social security': 1, 'barack obama': 1})}

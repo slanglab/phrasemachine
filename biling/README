@@ -1,0 +1,5 @@
+bilingual testing code here
+at the moment:
+
+python gophrases.py ../testdata/wine-nltk.txt ../testdata/sotu/*.txt > out.txt
+

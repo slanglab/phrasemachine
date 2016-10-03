@@ -1,2 +1,4 @@
 *.pyc
 .Rproj.user
+
+R/phrasemachine/.Rhistory

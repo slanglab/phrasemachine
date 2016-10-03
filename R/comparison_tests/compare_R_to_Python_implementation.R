@@ -92,7 +92,7 @@ for(i in 1:nrow(Python_Phrases)) {
 # see how many 8-length terms are in python output
 for(i in 1:nrow(Python_Phrases)) {
     str <- stringr::str_split(Python_Phrases$term[i],"_")
-    if(length(str) == 8) {
+    if(length(str[[1]]) == 8) {
         print(Python_Phrases$term[i])
     }
 }

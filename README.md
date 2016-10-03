@@ -56,8 +56,7 @@ Researchers have found the approach useful in
 [different](http://personalpages.manchester.ac.uk/staff/sophia.ananiadou/ijodl2000.pdf)
 [contexts](http://www.aclweb.org/anthology/Q14-1029).
 
-phrasemachine was created at [slanglab](http://slanglab.cs.umass.edu/phrases/)
-at the University of Massachusetts Amherst.
+phrasemachine was written by Abram Handler, Matthew J. Denny, and Brendan O'Connor.
 
 More details can be found in [this paper](http://brenocon.com/handler2016phrases.pdf): "Bag of What? Simple Noun Phrase Extraction for Text Analysis," Handler, Denny, Wallach, and O'Connor, 2016.
 

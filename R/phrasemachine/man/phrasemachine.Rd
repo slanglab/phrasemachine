@@ -5,7 +5,8 @@
 \title{POS tag and extract phrases from a collection of documents}
 \usage{
 phrasemachine(documents, regex = "(A|N)*N(PD*(A|N)*N)*",
-  maximum_ngram_length = 8, return_phrase_vectors = TRUE)
+  maximum_ngram_length = 8, return_phrase_vectors = TRUE,
+  return_tag_sequences = FALSE)
 }
 \arguments{
 \item{documents}{A vector of strings (one per document).}
@@ -20,6 +21,9 @@ phrasemachine(documents, regex = "(A|N)*N(PD*(A|N)*N)*",
 vectors (with each entry contain a vector of phrases in one document) should
 be returned, or whether phrases should combined into a single space separated
 string.}
+
+\item{return_tag_sequences}{Logical indicating whether tag sequences should
+be returned along with phrases. Defaults to FALSE.}
 }
 \value{
 A list object.
@@ -29,10 +33,6 @@ Extracts phrases from a set of documents using the
 "FilterFSA" method in Handler et al. 2016.
 }
 \examples{
-# load five example documents from the quanteda package
-corp <- quanteda::corpus(quanteda::inaugTexts)
-documents <- quanteda::texts(corp)[1:5]
-# extract phrases using phrasemachine
-phrases <- phrasemachine(documents)
+phrasemachine("Hello there my red good cat.")
 }
 

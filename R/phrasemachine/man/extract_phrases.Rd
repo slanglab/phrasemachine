@@ -5,7 +5,8 @@
 \title{Extract Phrases}
 \usage{
 extract_phrases(POS_tagged_documents, regex = "(A|N)*N(PD*(A|N)*N)*",
-  maximum_ngram_length = 8, return_phrase_vectors = TRUE)
+  maximum_ngram_length = 8, return_phrase_vectors = TRUE,
+  return_tag_sequences = FALSE)
 }
 \arguments{
 \item{POS_tagged_documents}{A list object of the form produced by the
@@ -22,6 +23,9 @@ style tags.}
 vectors (with each entry contain a vector of phrases in one document) should
 be returned, or whether phrases should combined into a single space separated
 string.}
+
+\item{return_tag_sequences}{Logical indicating whether tag sequences should
+be returned along with phrases. Defaults to FALSE.}
 }
 \value{
 A list object.

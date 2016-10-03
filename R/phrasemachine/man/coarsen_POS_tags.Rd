@@ -13,7 +13,9 @@ coarsen_POS_tags(tag_vector)
 A vector of coarse tags.
 }
 \description{
-Coarsens PTB or Petrov/Gimpel tags into one of five categories:
-'A' = ADJ, 'D' = DET, 'P' = ADP, 'N' = NOUN, 'O' = all else
+Coarsens PTB or Petrov/Gimpel coarse tags into one of five
+categories:
+'A' = adjective, 'D' = determiner, 'P' = preposition,
+'N' = common/proper noun, 'O' = all else
 }
 

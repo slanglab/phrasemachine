@@ -1,7 +1,7 @@
 Package: phrasemachine
 Type: Package
-Title: Simple Noun Phrase Extraction
-Version: 0.1.0
+Title: Simple Phrase Extraction
+Version: 0.2.1
 Date: 2016-10-02
 Author: Matthew J. Denny, Abe Handler, Hanna Wallach, Brendan O'Connor
 Maintainer: Matthew J. Denny <mdenny@psu.edu>

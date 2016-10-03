@@ -8,6 +8,9 @@
 #' @export
 POS_tag_documents <- function(documents){
 
+    # NULL out to deal with R CMD check note
+    type <- NULL
+
     # create a list object to store tagged tokens
     tagged_documents <- vector(mode = "list", length = length(documents))
 

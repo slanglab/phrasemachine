@@ -77,7 +77,7 @@ def extract_ngram_filter(pos_seq, regex=SimpleNP, maxlen=8):
     def gen():
         for s in xrange(len(ss)):
             for n in xrange(min(maxlen, len(ss)-s)):
-                e = s+n
+                e = s+n + 1
                 substr = ss[s:e]
                 if re.match(regex + "$", substr):
                     yield (s,e)

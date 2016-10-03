@@ -23,8 +23,20 @@ def test_pos():
     assert set(go(tags)) == set()
     assert set(go(tags, include_unigrams=True)) == set([(0,1)])
 
-# def test_basic_tagging():
-#     # Have to pick an example easy for the tagger
-#     pp = pm.get_phrases("Red stock market",output=['pos','tokens','token_spans'])
-#     assert pp['pos']=="JJ NN NN".split(), "this test failure may be due to tagger uncertainty... though unlikely..."
-#     assert set(pp['token_spans']) == set([ (0,2), (0,3), (1,3) ])
+def test_maxlen():
+    tags = "NN NN NN".split()
+    assert (0,3) in pm.extract_ngram_filter(tags)
+    assert (0,3) in pm.extract_ngram_filter(tags, maxlen=3)
+    assert (0,3) not in pm.extract_ngram_filter(tags, maxlen=2)
+    assert len(pm.extract_ngram_filter(tags, maxlen=0)) == 0
+
+def test_basic_tagging():
+    # Have to pick an example easy for the tagger
+    pp = pm.get_phrases("Red stock market",output=['pos','tokens','token_spans','counts'])
+    assert pp['pos']=="JJ NN NN".split(), "this test failure may be due to tagger uncertainty... though unlikely..."
+    assert set(pp['token_spans']) == set([ (0,2), (0,3), (1,3) ])
+
+    assert len(pp['counts'])==3
+    assert pp['counts']['red stock']==1
+    assert pp['counts']['red stock market']==1
+    assert pp['counts']['stock market']==1

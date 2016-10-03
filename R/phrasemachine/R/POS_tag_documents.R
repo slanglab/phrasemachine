@@ -21,6 +21,10 @@ POS_tag_documents <- function(documents){
         # extract the current document
         document <- documents[i]
 
+        # get rid of extra spaces.
+        document <- stringr::str_replace_all(document,"[\\s]+"," ")
+        document <- stringr::str_replace_all(document,"[\\s]$","")
+
         document <- NLP::as.String(document)
 
         # annotate words with POS tags

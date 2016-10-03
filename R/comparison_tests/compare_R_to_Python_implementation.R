@@ -40,7 +40,7 @@ POS_tagged_from_Python[[1]]$tokens <- tokens_Py$tokens
 POS_tagged_from_Python[[1]]$tags <- pos_tags_Py$pos
 
 # now get phrases
-phrases_from_Python <- extract_phrases(POS_tagged_from_Python)
+phrases_from_Python <- extract_phrases(POS_tagged_from_Python, maximum_ngram_length = 7)
 sum(unlist(phrases_Py$counts))
 length(phrases_from_Python[[1]])
 
@@ -76,6 +76,8 @@ for(i in 1:nrow(R_Phrases)) {
     }
 }
 
+
+# no terms in python that are not in R
 for(i in 1:nrow(Python_Phrases)) {
     in_py <- which(R_Phrases$term == Python_Phrases$term[i])
     if (length(in_py) == 1) {
@@ -86,4 +88,13 @@ for(i in 1:nrow(Python_Phrases)) {
         cat("Term:", Python_Phrases$term[i], "is not in R output but occurs",Python_Phrases$count[i],"times in Python output...\n")
     }
 }
+
+# see how many 8-length terms are in python output
+for(i in 1:nrow(Python_Phrases)) {
+    str <- stringr::str_split(Python_Phrases$term[i],"_")
+    if(length(str) == 8) {
+        print(Python_Phrases$term[i])
+    }
+}
+
 

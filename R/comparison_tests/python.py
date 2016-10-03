@@ -1,4 +1,5 @@
 # Generate output in python to compare ot R output
+# can only be run from the py directory, and only in interactive shell
 
 # package import
 import phrasemachine
@@ -21,3 +22,16 @@ os.chdir('/Users/matthewjdenny/Documents/Research/Congressional_Bill_Language/EM
 
 with open('python_phrase_extractions.json', 'w') as outfile:
     json.dump(phrases, outfile)
+ 
+# output POS tags   
+pos_tags = phrasemachine.get_phrases(text, output='pos')
+
+with open('python_pos_tags.json', 'w') as outfile:
+    json.dump(pos_tags, outfile)
+
+# output tokens    
+tokens = phrasemachine.get_phrases(text, output='tokens')
+
+with open('python_tokens.json', 'w') as outfile:
+    json.dump(tokens, outfile)
+    

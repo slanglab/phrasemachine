@@ -15,7 +15,7 @@ text = infile.read()
 infile.close()
 
 # get phrases
-phrases = phrasemachine.get_phrases(text)
+phrases = phrasemachine.get_phrases(text, include_unigrams = True)
 
 # write to json
 os.chdir('/Users/matthewjdenny/Documents/Research/Congressional_Bill_Language/EMNLP_2016/phrasemachine/R/comparison_tests')

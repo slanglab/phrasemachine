@@ -2,6 +2,9 @@ extract_ngram_filter <- function(pos_tags,
                                  regex,
                                  maximum_ngram_length) {
 
+    # decrement since we are going from 0 to maximum_ngram_length
+    maximum_ngram_length <- maximum_ngram_length - 1
+
     regex <- paste("^",regex,"$",sep = "")
 
     # first coarsen POS tags

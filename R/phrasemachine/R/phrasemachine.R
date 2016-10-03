@@ -11,18 +11,17 @@
 #' vectors (with each entry contain a vector of phrases in one document) should
 #' be returned, or whether phrases should combined into a single space separated
 #' string.
+#' @param return_tag_sequences Logical indicating whether tag sequences should
+#' be returned along with phrases. Defaults to FALSE.
 #' @examples
-#' # load five example documents from the quanteda package
-#' corp <- quanteda::corpus(quanteda::inaugTexts)
-#' documents <- quanteda::texts(corp)[1:5]
-#' # extract phrases using phrasemachine
-#' phrases <- phrasemachine(documents)
+#' phrasemachine("Hello there my red good cat.")
 #' @return A list object.
 #' @export
 phrasemachine <- function(documents,
                           regex = "(A|N)*N(PD*(A|N)*N)*",
                           maximum_ngram_length = 8,
-                          return_phrase_vectors = TRUE) {
+                          return_phrase_vectors = TRUE,
+                          return_tag_sequences = FALSE) {
 
     # tag documents
     tagged_documents <- POS_tag_documents(documents)
@@ -31,7 +30,8 @@ phrasemachine <- function(documents,
     phrases <- extract_phrases(tagged_documents,
                                regex = regex,
                                maximum_ngram_length = maximum_ngram_length,
-                               return_phrase_vectors = return_phrase_vectors)
+                               return_phrase_vectors = return_phrase_vectors,
+                               return_tag_sequences = return_tag_sequences)
 
     return(phrases)
 }

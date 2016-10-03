@@ -13,6 +13,8 @@ License: GPL-3
 Imports:
     NLP,
     openNLP,
-    stringr
+    stringr,
+	quanteda
 LazyData: TRUE
 RoxygenNote: 5.0.1
+Suggests: testthat

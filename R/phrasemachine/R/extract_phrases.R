@@ -13,17 +13,21 @@
 #' vectors (with each entry contain a vector of phrases in one document) should
 #' be returned, or whether phrases should combined into a single space separated
 #' string.
+#' @param return_tag_sequences Logical indicating whether tag sequences should
+#' be returned along with phrases. Defaults to FALSE.
 #' @return A list object.
 #' @export
 extract_phrases <- function(POS_tagged_documents,
                             regex = "(A|N)*N(PD*(A|N)*N)*",
                             maximum_ngram_length = 8,
-                            return_phrase_vectors = TRUE) {
+                            return_phrase_vectors = TRUE,
+                            return_tag_sequences = FALSE) {
     # determine the return type
     if (return_phrase_vectors) {
         to_return <- vector(mode = "list", length = length(POS_tagged_documents))
     } else {
         to_return <- rep("",length(POS_tagged_documents))
+        to_return2 <- vector(mode = "list", length = length(POS_tagged_documents))
     }
 
     for (i in 1:length(POS_tagged_documents)) {
@@ -35,17 +39,39 @@ extract_phrases <- function(POS_tagged_documents,
         # allocate phrases vector
         phrases <- rep("",nrow(spans))
 
+        # if we are returning tags, tehn coarsen them to put in output
+        if (return_tag_sequences) {
+            pos_tags <- coarsen_POS_tags(POS_tagged_documents[[i]]$tags)
+            tagseqs <- rep("",nrow(spans))
+        }
+
+
         for (j in 1:length(phrases)) {
             #populate phrases vector
             phrases[j] <- paste0(
                 POS_tagged_documents[[i]]$tokens[spans[j,1]:spans[j,2]],
                 collapse = "_")
+            if (return_tag_sequences) {
+                tagseqs[j] <- paste0(
+                    pos_tags[spans[j,1]:spans[j,2]],
+                    collapse = "")
+            }
         }
 
         if (return_phrase_vectors) {
-            to_return[[i]] <- phrases
+            if (return_tag_sequences) {
+                to_return[[i]] <- list(phrases = phrases,
+                                       tags = tagseqs)
+            } else {
+                to_return[[i]] <- phrases
+            }
         } else {
-            to_return[i] <- paste0(phrases,collapse = " ")
+            if (return_tag_sequences) {
+                to_return2[[i]] <- list(phrases =  paste0(phrases,collapse = " "),
+                                        tags =  paste0(tagseqs,collapse = " "))
+            } else {
+                to_return[i] <- paste0(phrases,collapse = " ")
+            }
         }
     }
 

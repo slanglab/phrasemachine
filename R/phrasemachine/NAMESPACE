@@ -2,5 +2,6 @@
 
 export(POS_tag_documents)
 export(coarsen_POS_tags)
+export(extract_ngram_filter)
 export(extract_phrases)
 export(phrasemachine)

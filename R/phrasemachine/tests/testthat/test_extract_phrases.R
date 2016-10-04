@@ -12,3 +12,6 @@ test_that("See if extractor works", {
                                maximum_ngram_length = 8,
                                return_phrase_vectors = TRUE)
 })
+
+
+

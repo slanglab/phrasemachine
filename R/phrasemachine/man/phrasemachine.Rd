@@ -6,12 +6,12 @@
 \usage{
 phrasemachine(documents, regex = "(A|N)*N(PD*(A|N)*N)*",
   maximum_ngram_length = 8, return_phrase_vectors = TRUE,
-  return_tag_sequences = FALSE)
+  return_tag_sequences = FALSE, exclude_unigrams = FALSE)
 }
 \arguments{
 \item{documents}{A vector of strings (one per document).}
 
-\item{regex}{The regualr expression used to find phrases. Defaults to
+\item{regex}{The regular expression used to find phrases. Defaults to
 "(A|N)*N(PD*(A|N)*N)*", as in Handler et al. 2016.}
 
 \item{maximum_ngram_length}{The maximum length phrases returned. Defaults to
@@ -24,6 +24,9 @@ string.}
 
 \item{return_tag_sequences}{Logical indicating whether tag sequences should
 be returned along with phrases. Defaults to FALSE.}
+
+\item{exclude_unigrams}{Option to exclude all unigrams from phrases returned.
+Defaults to FALSE.}
 }
 \value{
 A list object.

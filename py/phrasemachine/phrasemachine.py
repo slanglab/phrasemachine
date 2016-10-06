@@ -155,9 +155,12 @@ def get_stdeng_nltk_tagger(suppress_errors=False):
             return {'tokens': tokens, 'pos': [tag for (w,tag) in word_pos_pairs]}
     try:
         import nltk
-        # TODO
-        # _toks = nltk.word_tokenize("The red cat.")
-        # _tags = nltk.pos_tag(_toks)
+        from nltk.tokenize import RegexpTokenizer
+        tokenizer = RegexpTokenizer(r'\w+') # TODO: better tokenizer?
+        tagger = PerceptronTagger(load=False)
+        tagger.load('averaged_perceptron_tagger.pickle')
+        _toks = tokenizer.tokenize("The red cat sat down.")
+        _tags = tagger.tag(_toks)
         return NLTKTagger()
     except ImportError:
         if not suppress_errors: raise

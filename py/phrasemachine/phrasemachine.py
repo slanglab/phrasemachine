@@ -6,6 +6,7 @@ Only for the "SimpleNP" grammar.
 
 import sys,re
 from collections import Counter
+from nltk.tag import PerceptronTagger
 
 def logmsg(s):
     # would be better to use python logger
@@ -128,16 +129,38 @@ def get_stdeng_nltk_tagger(suppress_errors=False):
     class NLTKTagger:
         # http://www.nltk.org/book/ch05.html
         def tag_text(self, text):
-            tokens = nltk.word_tokenize(text)
-            word_pos_pairs = nltk.pos_tag(tokens)
+            
+            sent_detector = nltk.data.load("punkt.english.pickle") # TODO: already elsewhere in package?
+            sents = sent_detector.tokenize(text)    # TODO: this will fail on some unicode chars. I think assumes ascii
+
+            # AH commented out 10/5/16
+            # tokens = nltk.word_tokenize(text)  # This is what it was doing before
+            
+            # Load the tagger
+            tagger = PerceptronTagger(load=False)
+            tagger.load('averaged_perceptron_tagger.pickle')
+            
+            # putting import here instead of top of file b.c. not all will have nltk installed
+            from nltk.tokenize import RegexpTokenizer
+            tokenizer = RegexpTokenizer(r'\w+') # TODO: better tokenizer?
+            
+            word_pos_pairs = []
+            for sent in sents:
+                tokens = tokenizer.tokenize(sent)
+                word_pos_pairs = word_pos_pairs + tagger.tag(tokens)
+
             return {'tokens': tokens, 'pos': [tag for (w,tag) in word_pos_pairs]}
         def tag_tokens(self, tokens):
             word_pos_pairs = nltk.pos_tag(tokens)
             return {'tokens': tokens, 'pos': [tag for (w,tag) in word_pos_pairs]}
     try:
         import nltk
-        _toks = nltk.word_tokenize("The red cat.")
-        _tags = nltk.pos_tag(_toks)
+        from nltk.tokenize import RegexpTokenizer
+        tokenizer = RegexpTokenizer(r'\w+') # TODO: better tokenizer?
+        tagger = PerceptronTagger(load=False)
+        tagger.load('averaged_perceptron_tagger.pickle')
+        _toks = tokenizer.tokenize("The red cat sat down.")
+        _tags = tagger.tag(_toks)
         return NLTKTagger()
     except ImportError:
         if not suppress_errors: raise

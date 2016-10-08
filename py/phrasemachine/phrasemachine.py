@@ -133,8 +133,8 @@ class NLTKTagger:
         import nltk
         from nltk.tag import PerceptronTagger
         from nltk.tokenize import RegexpTokenizer
-        tokenizer_fn = os.path.join(os.path.dirname(__file__), "punkt.english.pickle")
-        tagger_fn = os.path.join(os.path.dirname(__file__), "averaged_perceptron_tagger.pickle")
+        tokenizer_fn = "data/punkt.english.pickle"
+        tagger_fn = "data/averaged_perceptron_tagger.pickle"
         # Load the tagger
         self.tagger = PerceptronTagger(load=False)
         self.tagger.load(tagger_fn)

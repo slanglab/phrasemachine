@@ -11,4 +11,5 @@ setup(
   keywords = ['nlp', 'nlproc'], # arbitrary keywords
   install_requires=['nltk'],
   classifiers = [],
+  package_data={'phrasemachine': ['data/*.pickle']},
 )

@@ -10,6 +10,9 @@ phrases automatically.
     print phrasemachine.get_phrases(text)
     {'counts': Counter({'social security': 1, 'barack obama': 1})}
 
+We provide both R and Python implementations; this README gives Python examples.
+See also the [R/](./R) directory.
+
 #### Installation
 
     pip install phrasemachine
@@ -60,3 +63,13 @@ phrasemachine was written by Abram Handler, Matthew J. Denny, and Brendan O'Conn
 
 More details can be found in [this paper](http://brenocon.com/handler2016phrases.pdf): "Bag of What? Simple Noun Phrase Extraction for Text Analysis," Handler, Denny, Wallach, and O'Connor, 2016.
 
+
+#### Repository structure
+
+ * `py/`: the Python implementation
+ * `R/`: the R implementation
+ * `fst/`: the OpenFST/pyfst implementation, which is not packaged for use by
+ default.  It does the FullNP grammar as specified in the paper.  Since the
+ dependencies can be difficult to run it's not used by default; instead, the
+ above use what the paper calls SimpleNP grammar with the FilterFSA matching
+ method.

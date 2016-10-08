@@ -3,7 +3,7 @@ Noun phrase extraction using Python's regular expression library.
 Only for the "SimpleNP" grammar.
 
 """
-
+from pkg_resources import resource_filename
 import sys,re,os
 from collections import Counter
 
@@ -133,8 +133,8 @@ class NLTKTagger:
         import nltk
         from nltk.tag import PerceptronTagger
         from nltk.tokenize import RegexpTokenizer
-        tokenizer_fn = "data/punkt.english.pickle"
-        tagger_fn = "data/averaged_perceptron_tagger.pickle"
+        tokenizer_fn = os.path.abspath(resource_filename('phrasemachine.data', 'punkt.english.pickle'))
+        tagger_fn = os.path.abspath(resource_filename('phrasemachine.data', 'averaged_perceptron_tagger.pickle'))
         # Load the tagger
         self.tagger = PerceptronTagger(load=False)
         self.tagger.load(tagger_fn)

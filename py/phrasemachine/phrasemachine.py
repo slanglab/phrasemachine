@@ -4,9 +4,8 @@ Only for the "SimpleNP" grammar.
 
 """
 
-import sys,re
+import sys,re,os
 from collections import Counter
-from nltk.tag import PerceptronTagger
 
 def logmsg(s):
     # would be better to use python logger
@@ -125,42 +124,47 @@ def safejoin(list_of_str_or_unicode):
 
 #########
 
-def get_stdeng_nltk_tagger(suppress_errors=False):
-    class NLTKTagger:
-        # http://www.nltk.org/book/ch05.html
-        def tag_text(self, text):
-            
-            sent_detector = nltk.data.load("punkt.english.pickle") # TODO: already elsewhere in package?
-            sents = sent_detector.tokenize(text)    # TODO: this will fail on some unicode chars. I think assumes ascii
-
-            # AH commented out 10/5/16
-            # tokens = nltk.word_tokenize(text)  # This is what it was doing before
-            
-            # Load the tagger
-            tagger = PerceptronTagger(load=False)
-            tagger.load('averaged_perceptron_tagger.pickle')
-            
-            # putting import here instead of top of file b.c. not all will have nltk installed
-            from nltk.tokenize import RegexpTokenizer
-            tokenizer = RegexpTokenizer(r'\w+') # TODO: better tokenizer?
-            
-            word_pos_pairs = []
-            for sent in sents:
-                tokens = tokenizer.tokenize(sent)
-                word_pos_pairs = word_pos_pairs + tagger.tag(tokens)
-
-            return {'tokens': tokens, 'pos': [tag for (w,tag) in word_pos_pairs]}
-        def tag_tokens(self, tokens):
-            word_pos_pairs = nltk.pos_tag(tokens)
-            return {'tokens': tokens, 'pos': [tag for (w,tag) in word_pos_pairs]}
-    try:
+class NLTKTagger:
+    '''
+    class that supplies part of speech tags using NLTK
+    note: avoids the NLTK downloader (see __init__ method)
+    '''
+    def __init__(self):
         import nltk
+        from nltk.tag import PerceptronTagger
         from nltk.tokenize import RegexpTokenizer
-        tokenizer = RegexpTokenizer(r'\w+') # TODO: better tokenizer?
-        tagger = PerceptronTagger(load=False)
-        tagger.load('averaged_perceptron_tagger.pickle')
-        _toks = tokenizer.tokenize("The red cat sat down.")
-        _tags = tagger.tag(_toks)
+        tokenizer_fn = os.path.join(os.path.dirname(__file__), "punkt.english.pickle")
+        tagger_fn = os.path.join(os.path.dirname(__file__), "averaged_perceptron_tagger.pickle")
+        # Load the tagger
+        self.tagger = PerceptronTagger(load=False)
+        self.tagger.load(tagger_fn)
+        self.tokenizer = RegexpTokenizer(r'\w+') # TODO: better tokenizer?
+        self.sent_detector = nltk.data.load(tokenizer_fn)
+
+
+    # http://www.nltk.org/book/ch05.html
+    def tag_text(self, text):
+        '''take input text and return tokens w/ part of speech tags using NLTK'''
+        # putting import here instead of top of file b.c. not all will have nltk installed
+        
+        sents = self.sent_detector.tokenize(text)    # TODO: this will fail on some unicode chars. I think assumes ascii
+        word_pos_pairs = []
+        for sent in sents:
+            tokens = self.tokenizer.tokenize(sent)
+            word_pos_pairs = word_pos_pairs + self.tagger.tag(tokens)
+
+        return {'tokens': tokens, 'pos': [tag for (w,tag) in word_pos_pairs]}
+
+    def tag_tokens(self, tokens):
+
+        word_pos_pairs = self.tagger.tag(tokens)
+        return {'tokens': tokens, 'pos': [tag for (w,tag) in word_pos_pairs]}
+
+
+def get_stdeng_nltk_tagger(suppress_errors=False):
+    try:
+        tagger = NLTKTagger()
+        throw_away = tagger.tag_text("The red cat sat down.")
         return NLTKTagger()
     except ImportError:
         if not suppress_errors: raise

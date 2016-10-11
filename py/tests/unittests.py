@@ -7,6 +7,7 @@
 import sys,os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 import phrasemachine as pm
+import pytest
 
 def test_pos():
     def go(tags, **kwargs):
@@ -40,3 +41,10 @@ def test_basic_tagging():
     assert pp['counts']['red stock']==1
     assert pp['counts']['red stock market']==1
     assert pp['counts']['stock market']==1
+
+def test_len_toks_equals_len_tags_nltk():
+    text = "Hi I like this. OK another sentence."
+    docutils = pytest.importorskip("nltk")
+    # http://doc.pytest.org/en/latest/skipping.html#skipping-on-a-missing-import-dependency
+    x = pm.get_stdeng_nltk_tagger().tag_text(text)
+    assert len(x['tokens']) == len(x['pos'])

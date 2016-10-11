@@ -149,11 +149,13 @@ class NLTKTagger:
         
         sents = self.sent_detector.tokenize(text)    # TODO: this will fail on some unicode chars. I think assumes ascii
         word_pos_pairs = []
+
+        all_tokens = []
         for sent in sents:
             tokens = self.tokenizer.tokenize(sent)
+            all_tokens = all_tokens + tokens
             word_pos_pairs = word_pos_pairs + self.tagger.tag(tokens)
-
-        return {'tokens': tokens, 'pos': [tag for (w,tag) in word_pos_pairs]}
+        return {'tokens': all_tokens, 'pos': [tag for (w,tag) in word_pos_pairs]}
 
     def tag_tokens(self, tokens):
 

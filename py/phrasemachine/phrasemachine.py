@@ -132,13 +132,18 @@ class NLTKTagger:
     def __init__(self):
         import nltk
         from nltk.tag import PerceptronTagger
-        from nltk.tokenize import RegexpTokenizer
+        from nltk.tokenize import TreebankWordTokenizer
         tokenizer_fn = os.path.abspath(resource_filename('phrasemachine.data', 'punkt.english.pickle'))
         tagger_fn = os.path.abspath(resource_filename('phrasemachine.data', 'averaged_perceptron_tagger.pickle'))
         # Load the tagger
         self.tagger = PerceptronTagger(load=False)
         self.tagger.load(tagger_fn)
-        self.tokenizer = RegexpTokenizer(r'\w+') # TODO: better tokenizer?
+
+        # note: nltk.word_tokenize calls the TreebankWordTokenizer, but uses the downloader.
+        #       Calling the TreebankWordTokenizer like this allows skipping the downloader.
+        #       It seems the TreebankWordTokenizer uses PTB tokenization = regexes. i.e. no downloads
+        #       https://github.com/nltk/nltk/blob/develop/nltk/tokenize/treebank.py#L25
+        self.tokenize = TreebankWordTokenizer().tokenize
         self.sent_detector = nltk.data.load(tokenizer_fn)
 
 
@@ -152,7 +157,7 @@ class NLTKTagger:
 
         all_tokens = []
         for sent in sents:
-            tokens = self.tokenizer.tokenize(sent)
+            tokens = self.tokenize(text)
             all_tokens = all_tokens + tokens
             word_pos_pairs = word_pos_pairs + self.tagger.tag(tokens)
         return {'tokens': all_tokens, 'pos': [tag for (w,tag) in word_pos_pairs]}

@@ -10,7 +10,7 @@ phrases automatically so you can use them in text analysis. Here's how it works 
     print phrasemachine.get_phrases(text)
     {'counts': Counter({'social security': 1, 'barack obama': 1})}
 
-For detailed technical discussion, see our paper: [Bag of What?](http://brenocon.com/handler2016phrases.pdf) By default, this package uses the (FilterFSA, k=8, SimpleNP) method from the paper.
+(For detailed technical discussion, see our paper: [Bag of What?](http://brenocon.com/handler2016phrases.pdf) By default, this package uses the (FilterFSA, k=8, SimpleNP) method from the paper).
 
 #### Installation
 

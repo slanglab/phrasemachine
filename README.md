@@ -3,7 +3,7 @@ Lots of important concepts get missed, since they don't appear as single words
 (unigrams).  For example, the words "social" and "security" don't fully
 represent the concept "social security"; the words "New" and "York" don't
 really represent "New York." Phrasemachine identifies these sort of multiword
-phrases automatically.
+phrases automatically so you can use them in a topic model, a list of frequent terms or any other form of downstream analysis. Here's how it works.
 
     import phrasemachine
     text = "Barack Obama supports expanding social security."
@@ -11,15 +11,22 @@ phrases automatically.
     {'counts': Counter({'social security': 1, 'barack obama': 1})}
 
 We provide both R and Python implementations; this README gives Python examples.
-See also the [R/](./R) directory.
+See also the [R/](./R) directory. (For detailed technical discussion, see our paper: [Bag of What?](http://brenocon.com/handler2016phrases.pdf. This package uses the (FilterFSA, k=Infinity, SimpleNP), method from the paper).
 
 #### Installation
 
     pip install phrasemachine
 
-#### Merging
+#### Near duplicates and merging
 
-TODO
+You might notice that phrasemachine sometimes extracts nested phrases. For instance,  
+
+    text = "The Omnibus Crime Control and Safe Streets Act of 1968 was signed into law by President Lyndon B. Johnson"
+    phrasemachine.get_phrases(text)
+
+extracts 'lyndon b. johnson' and 'b. johnson'. 
+
+This is intentional: phrasemachine tries to extract **all** phrases that might be useful for downstream analysis. In some cases, you might want to try to merge similar, overlapping or cofererent terms. For strategies, see section 4.3.1 from our paper: [Bag of What?](http://brenocon.com/handler2016phrases.pdf).
 
 #### Special configurations  
 

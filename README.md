@@ -10,7 +10,7 @@ phrases automatically so you can use them in text analysis. Here's how it works 
     print phrasemachine.get_phrases(text)
     {'counts': Counter({'social security': 1, 'barack obama': 1})}
 
-For detailed technical discussion, see our paper: [Bag of What?](http://brenocon.com/handler2016phrases.pdf). This package uses the (FilterFSA, k=Infinity, SimpleNP), method from the paper.
+For detailed technical discussion, see our paper: [Bag of What?](http://brenocon.com/handler2016phrases.pdf) By default, this package uses the (FilterFSA, k=8, SimpleNP) method from the paper.
 
 #### Installation
 
@@ -30,16 +30,15 @@ This is intentional: phrasemachine tries to extract **all** phrases that might b
 #### Special configurations  
 
 phrasemachine depends on [NLTK](http://www.nltk.org/) for its part-of-speech
-tagger; it uses NLTK by default.  (Or, it can be used with the higher accuracy
-[spaCy](https://spacy.io/) tagger; or any other you want.)
+tagger; it uses NLTK by default. It can also be used with the higher accuracy
+[spaCy](https://spacy.io/) tagger. To use a custom POS tagging from some other package, pass a list of tokens and a list of POS tags to the get_phrases method in `phrasemachine.py`.
 
-TODO:
+In the future, we will add discussion of the following:
 - twitter pos tagger
 - normalization (Barack Obama => barack obama)
 - tokenization
 - not just noun phrases (noun-verb?)
 - custom regex
-- custom pos tagging
 
 #### Natural language processing
 

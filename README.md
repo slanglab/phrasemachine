@@ -3,7 +3,7 @@ Lots of important concepts get missed, since they don't appear as single words
 (unigrams).  For example, the words "social" and "security" don't fully
 represent the concept "social security"; the words "New" and "York" don't
 really represent "New York." Phrasemachine identifies these sort of multiword
-phrases automatically so you can use them in a topic model, a list of frequent terms or any other form of downstream analysis. Here's how it works.
+phrases automatically so you can use them in text analysis. Here's how it works.
 
     import phrasemachine
     text = "Barack Obama supports expanding social security."

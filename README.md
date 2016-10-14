@@ -11,7 +11,7 @@ phrases automatically so you can use them in a topic model, a list of frequent t
     {'counts': Counter({'social security': 1, 'barack obama': 1})}
 
 We provide both R and Python implementations; this README gives Python examples.
-See also the [R/](./R) directory. (For detailed technical discussion, see our paper: [Bag of What?](http://brenocon.com/handler2016phrases.pdf. This package uses the (FilterFSA, k=Infinity, SimpleNP), method from the paper).
+See also the [R/](./R) directory. (For detailed technical discussion, see our paper: [Bag of What?](http://brenocon.com/handler2016phrases.pdf). This package uses the (FilterFSA, k=Infinity, SimpleNP), method from the paper.
 
 #### Installation
 
@@ -26,7 +26,7 @@ You might notice that phrasemachine sometimes extracts nested phrases. For insta
 
 extracts 'lyndon b. johnson' and 'b. johnson'. 
 
-This is intentional: phrasemachine tries to extract **all** phrases that might be useful for downstream analysis. In some cases, you might want to try to merge similar, overlapping or cofererent terms. For strategies, see section 4.3.1 from our paper: [Bag of What?](http://brenocon.com/handler2016phrases.pdf).
+This is intentional: phrasemachine tries to extract **all** phrases that might be useful for downstream analysis. In some cases, you might want to try to merge similar, overlapping or cofererent terms. For strategies, see section 4.3.1 from our paper: [Bag of What?](http://brenocon.com/handler2016phrases.pdf)
 
 #### Special configurations  
 

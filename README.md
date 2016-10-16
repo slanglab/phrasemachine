@@ -37,7 +37,7 @@ In the future, we will add discussion of the following:
 - twitter pos tagger
 - normalization (Barack Obama => barack obama)
 - tokenization
-- not just noun phrases (noun-verb?)
+- not just noun phrases (noun-verb? adj phrases, any coordinations, verb groups?)
 - custom regex
 
 #### Natural language processing
@@ -66,7 +66,7 @@ Researchers have found the approach useful in
 
 phrasemachine was written by Abram Handler, Matthew J. Denny, and Brendan O'Connor.
 
-More details can be found in [this paper](http://brenocon.com/handler2016phrases.pdf): "Bag of What? Simple Noun Phrase Extraction for Text Analysis," Handler, Denny, Wallach, and O'Connor, 2016.
+More details can be found in [this paper](http://brenocon.com/handler2016phrases.pdf): "Bag of What? Simple Noun Phrase Extraction for Text Analysis," Handler, Denny, Wallach, and O'Connor, 2016; or, [this slidedeck](http://brenocon.com/oconnor_textasdata2016.pdf).
 
 
 #### Repository structure
@@ -75,6 +75,10 @@ More details can be found in [this paper](http://brenocon.com/handler2016phrases
  * `R/`: the R implementation
  * `fst/`: the OpenFST/pyfst implementation, which is not packaged for use by
  default.  It does the FullNP grammar as specified in the paper.  Since the
- dependencies can be difficult to run it's not used by default; instead, the
- above use what the paper calls SimpleNP grammar with the FilterFSA matching
- method.
+ dependencies can be difficult to run, the main implementations above use what
+ the paper calls SimpleNP grammar with the FilterFSA matching method.
+
+#### Acknowledgment
+
+"phrasemachine" is named after [Michael Heilman](http://www.cs.cmu.edu/~mheilman/)'s
+"phraseomatic" script.

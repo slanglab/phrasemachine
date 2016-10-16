@@ -70,14 +70,14 @@ def extract_finditer(pos_seq, regex=SimpleNP):
             yield (m.start(),m.end())
     return list(gen())
 
-def extract_ngram_filter(pos_seq, regex=SimpleNP, maxlen=8):
+def extract_ngram_filter(pos_seq, regex=SimpleNP, minlen=1, maxlen=8):
     """The "FilterFSA" method in Handler et al. 2016.
     Returns token position spans of valid ngrams."""
     ss = coarse_tag_str(pos_seq)
     def gen():
         for s in xrange(len(ss)):
-            for n in xrange(min(maxlen, len(ss)-s)):
-                e = s+n + 1
+            for n in xrange(minlen, 1 + min(maxlen, len(ss)-s)):
+                e = s+n
                 substr = ss[s:e]
                 if re.match(regex + "$", substr):
                     yield (s,e)
@@ -223,7 +223,7 @@ TAGGER_NAMES = {
     # 'twitter': None,
 }
 
-def get_phrases(text=None, tokens=None, postags=None, tagger='nltk', grammar='SimpleNP', regex=None, include_unigrams=False, output='counts'):
+def get_phrases(text=None, tokens=None, postags=None, tagger='nltk', grammar='SimpleNP', regex=None, minlen=2, maxlen=8, output='counts'):
     """Give a text (or POS tag sequence), return the phrases matching the given
     grammar.  Works on documents or sentences.  
     Returns a dict with one or more keys with the phrase information.
@@ -276,9 +276,7 @@ def get_phrases(text=None, tokens=None, postags=None, tagger='nltk', grammar='Si
         else:
             assert False, "Don't know grammar %s" % grammar
 
-    phrase_tokspans = extract_ngram_filter(postags)
-    if not include_unigrams:
-        phrase_tokspans = [(s,e) for (s,e) in phrase_tokspans if e-s > 1]
+    phrase_tokspans = extract_ngram_filter(postags, minlen=minlen, maxlen=maxlen)
 
     ## Handle multiple possible return info outputs
 

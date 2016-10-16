@@ -22,14 +22,19 @@ def test_pos():
     assert set(go(tags)) == set([ (1,3) ])
     tags = "NN".split()
     assert set(go(tags)) == set()
-    assert set(go(tags, include_unigrams=True)) == set([(0,1)])
 
-def test_maxlen():
+def test_minmaxlen():
     tags = "NN NN NN".split()
     assert (0,3) in pm.extract_ngram_filter(tags)
+
     assert (0,3) in pm.extract_ngram_filter(tags, maxlen=3)
     assert (0,3) not in pm.extract_ngram_filter(tags, maxlen=2)
     assert len(pm.extract_ngram_filter(tags, maxlen=0)) == 0
+
+    assert (0,) not in pm.extract_ngram_filter(tags), "default should exclude unigrams"
+    assert (0,) not in pm.extract_ngram_filter(tags, minlen=2)
+    assert (0,1) not in pm.extract_ngram_filter(tags, minlen=3)
+    assert (0,3) in pm.extract_ngram_filter(tags, minlen=3)
 
 def test_basic_tagging():
     # Have to pick an example easy for the tagger

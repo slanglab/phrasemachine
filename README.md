@@ -12,9 +12,11 @@ phrases automatically so you can use them in text analysis. Here's how it works 
 
 For more details, see our paper: [Bag of What?](http://brenocon.com/handler2016phrases.pdf), or [this slidedeck](http://brenocon.com/oconnor_textasdata2016.pdf).  By default, this package uses the (FilterFSA, k=8, SimpleNP) method from the paper.
 
+The software only supports English texts.
+
 #### Installation
 
-We have implementations for both R and Python.
+We have implementations in both R and Python.
 
 For Python, install with:
 
@@ -25,7 +27,8 @@ For R: we have not released on CRAN yet, but this may work in the meantime:
     library(devtools)
     install_github("slanglab/phrasemachine/R/phrasemachine")
 
-The rest of this document gives examples in Python; R-specific documentation is forthcoming.
+The rest of this document gives examples in Python; R-specific documentation is
+forthcoming.
 
 #### Near duplicates and merging
 
@@ -42,7 +45,11 @@ This is intentional: phrasemachine tries to extract **all** phrases that might b
 
 phrasemachine depends on [NLTK](http://www.nltk.org/) for its part-of-speech
 tagger; it uses NLTK by default. It can also be used with the higher accuracy
-[spaCy](https://spacy.io/) tagger. To use a custom POS tagging from some other package, pass a list of tokens and a list of POS tags to the get_phrases method in `phrasemachine.py`.
+[spaCy](https://spacy.io/) tagger. To use a custom POS tagging from some other
+package, pass a list of tokens and a list of POS tags to the get_phrases method
+in [phrasemachine.py](py/phrasemachine/phrasemachine.py).  If you are familiar
+and comfortable with POS tagging yourself, all you really need is the
+[phrasemachine.py](py/phrasemachine/phrasemachine.py) file.
 
 In the future, we will add discussion of the following:
 - twitter pos tagger

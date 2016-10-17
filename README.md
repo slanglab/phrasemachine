@@ -3,18 +3,29 @@ Lots of important concepts get missed, since they don't appear as single words
 (unigrams).  For example, the words "social" and "security" don't fully
 represent the concept "social security"; the words "New" and "York" don't
 really represent "New York." Phrasemachine identifies these sort of multiword
-phrases automatically so you can use them in text analysis. Here's how it works in Python. See the [R/](./R) directory for code in R.
+phrases automatically so you can use them in text analysis. Here's how it works in Python.
 
     import phrasemachine
     text = "Barack Obama supports expanding social security."
     print phrasemachine.get_phrases(text)
     {'counts': Counter({'social security': 1, 'barack obama': 1})}
 
-(For detailed technical discussion, see our paper: [Bag of What?](http://brenocon.com/handler2016phrases.pdf) By default, this package uses the (FilterFSA, k=8, SimpleNP) method from the paper).
+For more details, see our paper: [Bag of What?](http://brenocon.com/handler2016phrases.pdf), or [this slidedeck](http://brenocon.com/oconnor_textasdata2016.pdf).  By default, this package uses the (FilterFSA, k=8, SimpleNP) method from the paper.
 
 #### Installation
 
+We have implementations for both R and Python.
+
+For Python, install with:
+
     pip install phrasemachine
+
+For R: we have not released on CRAN yet, but this may work in the meantime:
+
+    library(devtools)
+    install_github("slanglab/phrasemachine/R/phrasemachine")
+
+The rest of this document gives examples in Python; R-specific documentation is forthcoming.
 
 #### Near duplicates and merging
 

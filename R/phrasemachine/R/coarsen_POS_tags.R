@@ -5,6 +5,9 @@
 #' 'N' = common/proper noun, 'O' = all else
 #' @param tag_vector A vector of POS tags.
 #' @return A vector of coarse tags.
+#' @examples
+#' pos_tags <- c("VB", "JJ", "NN", "NN")
+#' coarsen_POS_tags(pos_tags)
 #' @export
 coarsen_POS_tags <- function(tag_vector) {
     for (i in 1:length(tag_vector)) {

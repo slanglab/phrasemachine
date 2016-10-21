@@ -10,7 +10,7 @@ test_that("See if extractor works", {
     phrases <- extract_phrases(tagged_documents,
                                regex = "(A|N)*N(PD*(A|N)*N)*",
                                maximum_ngram_length = 8,
-                               return_phrase_vectors = TRUE)
+                               minimum_ngram_length = 1)
 })
 
 

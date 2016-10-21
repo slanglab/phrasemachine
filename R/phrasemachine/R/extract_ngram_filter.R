@@ -5,20 +5,26 @@
 #' @param pos_tags A character vector of Penn TreeBank or Petrov/Gimpel
 #' style tags.
 #' @param regex The regular expression used to find phrases.
-#' @param maximum_ngram_length The maximum length phrases returned. Defaults to
-#' 8. Increasing this number can greatly increase runtime.
-#' @param exclude_unigrams Option to exclude all unigrams from spans returned.
-#' Defaults to FALSE.
+#' @param maximum_ngram_length The maximum length phrases returned.
+#' @param minimum_ngram_length The minimum length phrases returned.
 #' @return A numeric matrix with two columns and rows equal to number of spans
 #' matched. First column is span start, second is span end.
+#' @examples
+#' pos_tags <- c("VB", "JJ", "NN", "NN")
+#' spans <- extract_ngram_filter(pos_tags,
+#'                               regex = "(A|N)*N(PD*(A|N)*N)*",
+#'                               maximum_ngram_length = 8,
+#'                               minimum_ngram_length = 1)
 #' @export
 extract_ngram_filter <- function(pos_tags,
                                  regex,
                                  maximum_ngram_length,
-                                 exclude_unigrams = FALSE) {
+                                 minimum_ngram_length) {
 
-    # decrement since we are going from 0 to maximum_ngram_length
+    # decrement since we are going from minimum_ngram_length to
+    # maximum_ngram_length
     maximum_ngram_length <- maximum_ngram_length - 1
+    minimum_ngram_length <- minimum_ngram_length - 1
 
     regex <- paste("^",regex,"$",sep = "")
 
@@ -36,28 +42,8 @@ extract_ngram_filter <- function(pos_tags,
     for (i in 1:length(pos_tags)) {
         # get the end of the span we are checking
         max_span <- min(maximum_ngram_length, (length(pos_tags) - i))
-        if (exclude_unigrams) {
-            if (max_span > 0) {
-                for (j in 1:max_span) {
-                    # for the current pos span to look at
-                    subspan <- paste0(pos_tags[i:(i+j)],collapse = "")
-                    # if we find it then add the span to the list
-                    if (grepl(regex,subspan)) {
-                        # store the span
-                        spans[span_counter,] <- c(i,i+j)
-                        # increment the span counter
-                        span_counter <- span_counter + 1
-
-                        # grow the span matrix if necessary
-                        if (span_counter > max_spans) {
-                            spans <- rbind(spans,matrix(0, nrow = 10000, ncol= 2))
-                            max_spans <- max_spans + 10000
-                        }
-                    }
-                }
-            }
-        } else {
-            for (j in 0:max_span) {
+        if (max_span >= minimum_ngram_length) {
+            for (j in minimum_ngram_length:max_span) {
                 # for the current pos span to look at
                 subspan <- paste0(pos_tags[i:(i+j)],collapse = "")
                 # if we find it then add the span to the list

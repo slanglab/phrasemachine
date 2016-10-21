@@ -14,7 +14,7 @@ extract_phrases(POS_tagged_documents, regex = "(A|N)*N(PD*(A|N)*N)*",
 style tags.}
 
 \item{regex}{The regular expression used to find phrases. Defaults to
-"(A|N)*N(PD*(A|N)*N)*", as in Handler et al. 2016.}
+"(A|N)*N(PD*(A|N)*N)*", the "SimpleNP" grammar in Handler et al. 2016.}
 
 \item{maximum_ngram_length}{The maximum length phrases returned. Defaults to
 8. Increasing this number can greatly increase runtime.}

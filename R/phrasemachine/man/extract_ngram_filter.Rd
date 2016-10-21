@@ -11,8 +11,7 @@ extract_ngram_filter(pos_tags, regex, maximum_ngram_length,
 \item{pos_tags}{A character vector of Penn TreeBank or Petrov/Gimpel
 style tags.}
 
-\item{regex}{The regular expression used to find phrases. Defaults to
-"(A|N)*N(PD*(A|N)*N)*", as in Handler et al. 2016.}
+\item{regex}{The regular expression used to find phrases.}
 
 \item{maximum_ngram_length}{The maximum length phrases returned. Defaults to
 8. Increasing this number can greatly increase runtime.}

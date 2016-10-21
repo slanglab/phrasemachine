@@ -9,22 +9,53 @@
 #' "(A|N)*N(PD*(A|N)*N)*", the "SimpleNP" grammar in Handler et al. 2016.
 #' @param maximum_ngram_length The maximum length phrases returned. Defaults to
 #' 8. Increasing this number can greatly increase runtime.
+#' @param minimum_ngram_length The minimum length phrases returned. Defaults to
+#' 2. Can be increased to remove shorter phrases, or decreased to include
+#' unigrams.
 #' @param return_phrase_vectors Logical indicating whether a list of phrase
 #' vectors (with each entry contain a vector of phrases in one document) should
 #' be returned, or whether phrases should combined into a single space separated
 #' string.
 #' @param return_tag_sequences Logical indicating whether tag sequences should
 #' be returned along with phrases. Defaults to FALSE.
-#' @param exclude_unigrams Option to exclude all unigrams from phrases returned.
-#' Defaults to FALSE.
 #' @return A list object.
+#' @examples
+#' \dontrun{
+#' # load data
+#' corp <- quanteda::corpus(quanteda::inaugTexts)
+#' documents <- quanteda::texts(corp)[1:5]
+#'
+#' # run tagger
+#' tagged_documents <- POS_tag_documents(documents)
+#'
+#' phrases <- extract_phrases(tagged_documents,
+#'                            regex = "(A|N)*N(PD*(A|N)*N)*",
+#'                            maximum_ngram_length = 8,
+#'                            minimum_ngram_length = 1)
+#' }
 #' @export
 extract_phrases <- function(POS_tagged_documents,
                             regex = "(A|N)*N(PD*(A|N)*N)*",
                             maximum_ngram_length = 8,
+                            minimum_ngram_length = 2,
                             return_phrase_vectors = TRUE,
-                            return_tag_sequences = FALSE,
-                            exclude_unigrams = FALSE) {
+                            return_tag_sequences = FALSE) {
+
+    # make sure that the lengths make sense
+    if (minimum_ngram_length > maximum_ngram_length) {
+        minimum_ngram_length <- maximum_ngram_length
+        warning("minimum_ngram_length was smaller than maximum_ngram_length, the two have been set equal.")
+    }
+    # make sure they have psitive length
+    if (minimum_ngram_length < 1) {
+        minimum_ngram_length <- 1
+        warning("minimum_ngram_length < 1. Resetting to 1.")
+    }
+    if (maximum_ngram_length < 1) {
+        maximum_ngram_length <- 1
+        warning("maximum_ngram_length < 1. Resetting to 1.")
+    }
+
     # determine the return type
     if (return_phrase_vectors) {
         to_return <- vector(mode = "list", length = length(POS_tagged_documents))
@@ -39,7 +70,7 @@ extract_phrases <- function(POS_tagged_documents,
         spans <- extract_ngram_filter(pos_tags = POS_tagged_documents[[i]]$tags,
                                       regex = regex,
                                       maximum_ngram_length = maximum_ngram_length,
-                                      exclude_unigrams = exclude_unigrams)
+                                      minimum_ngram_length = minimum_ngram_length)
 
         # only get phrases if we found spans
         if (!is.null(spans)) {

@@ -5,6 +5,15 @@
 #'
 #' @param documents A vector of strings (one per document).
 #' @return A list object.
+#' @examples
+#' \dontrun{
+#' # load data
+#' corp <- quanteda::corpus(quanteda::inaugTexts)
+#' documents <- quanteda::texts(corp)[1:5]
+#'
+#' # run tagger
+#' tagged_documents <- POS_tag_documents(documents)
+#' }
 #' @export
 POS_tag_documents <- function(documents){
 

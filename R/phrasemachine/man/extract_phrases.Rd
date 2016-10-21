@@ -5,8 +5,8 @@
 \title{Extract Phrases}
 \usage{
 extract_phrases(POS_tagged_documents, regex = "(A|N)*N(PD*(A|N)*N)*",
-  maximum_ngram_length = 8, return_phrase_vectors = TRUE,
-  return_tag_sequences = FALSE, exclude_unigrams = FALSE)
+  maximum_ngram_length = 8, minimum_ngram_length = 2,
+  return_phrase_vectors = TRUE, return_tag_sequences = FALSE)
 }
 \arguments{
 \item{POS_tagged_documents}{A list object of the form produced by the
@@ -19,6 +19,10 @@ style tags.}
 \item{maximum_ngram_length}{The maximum length phrases returned. Defaults to
 8. Increasing this number can greatly increase runtime.}
 
+\item{minimum_ngram_length}{The minimum length phrases returned. Defaults to
+2. Can be increased to remove shorter phrases, or decreased to include
+unigrams.}
+
 \item{return_phrase_vectors}{Logical indicating whether a list of phrase
 vectors (with each entry contain a vector of phrases in one document) should
 be returned, or whether phrases should combined into a single space separated
@@ -26,9 +30,6 @@ string.}
 
 \item{return_tag_sequences}{Logical indicating whether tag sequences should
 be returned along with phrases. Defaults to FALSE.}
-
-\item{exclude_unigrams}{Option to exclude all unigrams from phrases returned.
-Defaults to FALSE.}
 }
 \value{
 A list object.
@@ -36,5 +37,20 @@ A list object.
 \description{
 Extracts phrases from a list of POS tagged document using the
 "FilterFSA" method in Handler et al. 2016.
+}
+\examples{
+\dontrun{
+# load data
+corp <- quanteda::corpus(quanteda::inaugTexts)
+documents <- quanteda::texts(corp)[1:5]
+
+# run tagger
+tagged_documents <- POS_tag_documents(documents)
+
+phrases <- extract_phrases(tagged_documents,
+                           regex = "(A|N)*N(PD*(A|N)*N)*",
+                           maximum_ngram_length = 8,
+                           minimum_ngram_length = 1)
+}
 }
 

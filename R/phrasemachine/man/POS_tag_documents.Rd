@@ -17,4 +17,14 @@ Annotates documents (proived as a character vector with one
 entry per document) with pars-of-speech (POS) tags using the openNLP POS
 tagger
 }
+\examples{
+\dontrun{
+# load data
+corp <- quanteda::corpus(quanteda::inaugTexts)
+documents <- quanteda::texts(corp)[1:5]
+
+# run tagger
+tagged_documents <- POS_tag_documents(documents)
+}
+}
 

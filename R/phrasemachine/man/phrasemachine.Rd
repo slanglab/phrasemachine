@@ -5,8 +5,8 @@
 \title{POS tag and extract phrases from a collection of documents}
 \usage{
 phrasemachine(documents, regex = "(A|N)*N(PD*(A|N)*N)*",
-  maximum_ngram_length = 8, return_phrase_vectors = TRUE,
-  return_tag_sequences = FALSE, exclude_unigrams = FALSE)
+  maximum_ngram_length = 8, minimum_ngram_length = 2,
+  return_phrase_vectors = TRUE, return_tag_sequences = FALSE)
 }
 \arguments{
 \item{documents}{A vector of strings (one per document).}
@@ -17,6 +17,10 @@ phrasemachine(documents, regex = "(A|N)*N(PD*(A|N)*N)*",
 \item{maximum_ngram_length}{The maximum length phrases returned. Defaults to
 8. Increasing this number can greatly increase runtime.}
 
+\item{minimum_ngram_length}{The minimum length phrases returned. Defaults to
+2. Can be increased to remove shorter phrases, or decreased to include
+unigrams.}
+
 \item{return_phrase_vectors}{Logical indicating whether a list of phrase
 vectors (with each entry contain a vector of phrases in one document) should
 be returned, or whether phrases should combined into a single space separated
@@ -24,9 +28,6 @@ string.}
 
 \item{return_tag_sequences}{Logical indicating whether tag sequences should
 be returned along with phrases. Defaults to FALSE.}
-
-\item{exclude_unigrams}{Option to exclude all unigrams from phrases returned.
-Defaults to FALSE.}
 }
 \value{
 A list object.

@@ -5,7 +5,7 @@
 \title{Extract phrase spans}
 \usage{
 extract_ngram_filter(pos_tags, regex, maximum_ngram_length,
-  exclude_unigrams = FALSE)
+  minimum_ngram_length)
 }
 \arguments{
 \item{pos_tags}{A character vector of Penn TreeBank or Petrov/Gimpel
@@ -13,11 +13,9 @@ style tags.}
 
 \item{regex}{The regular expression used to find phrases.}
 
-\item{maximum_ngram_length}{The maximum length phrases returned. Defaults to
-8. Increasing this number can greatly increase runtime.}
+\item{maximum_ngram_length}{The maximum length phrases returned.}
 
-\item{exclude_unigrams}{Option to exclude all unigrams from spans returned.
-Defaults to FALSE.}
+\item{minimum_ngram_length}{The minimum length phrases returned.}
 }
 \value{
 A numeric matrix with two columns and rows equal to number of spans
@@ -26,5 +24,12 @@ matched. First column is span start, second is span end.
 \description{
 Takes a sequences of POS tags and a regex and returns spans
 which match regex.
+}
+\examples{
+pos_tags <- c("VB", "JJ", "NN", "NN")
+spans <- extract_ngram_filter(pos_tags,
+                              regex = "(A|N)*N(PD*(A|N)*N)*",
+                              maximum_ngram_length = 8,
+                              minimum_ngram_length = 1)
 }
 

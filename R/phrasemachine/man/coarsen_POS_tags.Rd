@@ -18,4 +18,8 @@ categories:
 'A' = adjective, 'D' = determiner, 'P' = preposition,
 'N' = common/proper noun, 'O' = all else
 }
+\examples{
+pos_tags <- c("VB", "JJ", "NN", "NN")
+coarsen_POS_tags(pos_tags)
+}
 

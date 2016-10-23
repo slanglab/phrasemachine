@@ -12,7 +12,7 @@ phrasemachine(documents, regex = "(A|N)*N(PD*(A|N)*N)*",
 \item{documents}{A vector of strings (one per document).}
 
 \item{regex}{The regular expression used to find phrases. Defaults to
-"(A|N)*N(PD*(A|N)*N)*", as in Handler et al. 2016.}
+"(A|N)*N(PD*(A|N)*N)*", the "SimpleNP" grammar in Handler et al. 2016.}
 
 \item{maximum_ngram_length}{The maximum length phrases returned. Defaults to
 8. Increasing this number can greatly increase runtime.}

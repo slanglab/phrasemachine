@@ -2,3 +2,5 @@
 .Rproj.user
 
 R/phrasemachine/.Rhistory
+
+*.Rout

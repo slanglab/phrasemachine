@@ -95,6 +95,15 @@ More details can be found in [this paper](http://brenocon.com/handler2016phrases
  default.  It does the FullNP grammar as specified in the paper.  Since the
  dependencies can be difficult to run, the main implementations above use what
  the paper calls SimpleNP grammar with the FilterFSA matching method.
+ 
+#### Comparing R and Python implementations
+
+The R and Python implementations of POS tagging currently rely on different libraries, and will thus give different results. However, given the same input POS tag sequences, both implementations will return identical results. To verify that this is the case, simply navigate to the `R/comparison_tests` directory, then run the `run_POS_to_spans_test.sh` shell script. This can be done using the following lines of code (assuming you are in the top level directory for this repo). 
+
+	cd R/comparison_tests
+	bash run_POS_to_spans_test.sh
+	
+The script will produce a set of phrase spans using both implementations and print out any mismatches between the two sets of results.
 
 #### Acknowledgment
 

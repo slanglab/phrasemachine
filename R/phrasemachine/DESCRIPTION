@@ -1,9 +1,9 @@
 Package: phrasemachine
 Type: Package
 Title: Simple Phrase Extraction
-Version: 0.2.2
-Date: 2016-10-22
-Author: Matthew J. Denny, Abe Handler, Hanna Wallach, Brendan O'Connor
+Version: 1.0.0
+Date: 2016-10-23
+Author: Matthew J. Denny, Abram Handler, Brendan O'Connor
 Maintainer: Matthew J. Denny <mdenny@psu.edu>
 Description: Simple noun phrase extraction using part-of-speech information.
     Takes a collection of un-processed documents as input and returns a set of noun

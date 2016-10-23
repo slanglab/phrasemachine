@@ -103,9 +103,11 @@ a `quanteda` corpus object for use in their normal preprocessing pipeline.
 The minimum and maximum token length for phrases may be specified via 
 the `minimum_ngram_length` and `maximum_ngram_length` arguments, which default 
 to 1 and 8 respectively. The `regex` argument can be used to supply a custom 
-regular expression for phrase extraction, but defaults to `"(A|N)*N(PD*(A|N)*N)*"`
-as in [Hander et al. (2016)](https://brenocon.com/handler2016phrases.pdf). If 
-`return_phrase_vectors = TRUE` then the user may additionally specify `return_tag_sequences = TRUE` (the default value is `FALSE`), to return the tag
+regular expression for phrase extraction, but defaults to `"(A|N)*N(PD*(A|N)*N)*"`,
+which is the **SimpleNP** grammar in 
+[Hander et al. (2016)](https://brenocon.com/handler2016phrases.pdf)). If 
+`return_phrase_vectors = TRUE` then the user may additionally specify 
+`return_tag_sequences = TRUE` (the default value is `FALSE`), to return the tag
 sequences associated with each phrase. This can be useful if the user wishes to
 perform further selection on specific tag patterns. 
 

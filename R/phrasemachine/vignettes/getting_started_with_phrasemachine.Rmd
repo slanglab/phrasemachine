@@ -1,0 +1,123 @@
+---
+title: "Getting started with phrasemachine"
+author: "Matthew Denny"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{getting_started_with_phrasemachine}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This vignette is designed to introduce you to the **phrasemachine** R package. 
+The main function, `phrasemachine()` takes a document or list of documents as
+input and returns a list of phrases extracted from these documents. These 
+phrases can then be fed into the preprocessing pipelines for a number of other
+text analysis packages in R, including [quanteda](https://github.com/kbenoit/quanteda).
+A parallel implementation of this package is available for Python users. More 
+information (including easy installation instruction via pip) can be found at 
+the [GitHub](https://github.com/slanglab/phrasemachine) page for this package. 
+
+The paper detailing **phrasemachine**  can be found at the link below:
+
+* Handler, A., Denny, M. J., Wallach, H., & O’Connor, B. (2016). "Bag of What? 
+Simple Noun Phrase Extraction for Text Analysis". In *Proceedings of the Workshop 
+on Natural Language Processing and Computational Social Science at the 2016 
+Conference on Empirical Methods in Natural Language Processing*. 
+[**[Available Here]**](https://brenocon.com/handler2016phrases.pdf)
+
+This package relies on a part-of-speech (POS) tagger to extract phrases. The most 
+portable POS tagger available in R comes in the `OpenNLP` package. However, the POS
+tagger this package provides is not as accurate as the current state of the art
+taggers availalbe in software pakcages availabe for other languages (such as 
+`Spacy` or `CoreNLP`). We intend to eventually incorporate other POS taggers into 
+this package, but for now, if you want the highest accuracy, we suggest using 
+the Python implementation of the package. In practice, there may not be a 
+significant difference in the end results, but we wish to make the end user 
+aware of this possibility. 
+
+## Installation
+The release version of the package can be installed from CRAN as follows:
+```{r eval=FALSE} 
+install.packages("phrasemachine")
+```  
+
+If you want to get the latest version from GitHub, you will need to have the 
+`devtools` R package installed first:
+```{r eval=FALSE} 
+install.packages("devtools")
+```    
+Now we can install from GitHub using the following line:
+```{r eval=FALSE} 
+devtools::install_github("slanglab/phrasemachine/R/phrasemachine")
+```
+Once the `phrasemachine` package is installed, you may access its functionality 
+as you would any other package by calling:
+```{r eval=FALSE} 
+library(phrasemachine)
+```
+If all went well, check out `vignette("getting_started_with_phrasemachine")` 
+which will pull up this vignette!
+
+### Java Issues
+In general, you will need to have Java 1.8+ installed on your computer for the 
+`OpenNLP` package to work. There are a number of operating system specific 
+tutorials on the web, and most newer computers meet this requirement by default.
+However, we expect issues with Java to be the most common prolems users 
+encounter when trying to install and use the `OpenNLP` package, which we use for
+POS tagging. In partcular, If you are trying to install this package on a newer
+Mac computer (OS X 10.10+), you may encounter an error when trying to load the 
+package. We suggest you follow the instructions in the blog post 
+[**[here]**](http://conjugateprior.org/2014/12/r-java8-osx/) to configure R and
+Java correctly if you encounter an error. 
+
+On older operating systems, you may not have Java 1.8+ installed, in which case
+you will need to install it first before updating your Java settings.
+
+## Basic Usage
+We begin by loading the package and some example data from the `quanteda` R 
+package. In this example, we will make use of 5 U.S. presidential inaugural 
+speeches.
+```{r eval=TRUE, fig.width=6, fig.height=6, fig.align ='center'}
+library(phrasemachine)
+
+# load in U.S. presidential inaugural speeches from Quanteda example data.
+corp <- quanteda::corpus(quanteda::inaugTexts)
+# use first 5 documents for example
+documents <- quanteda::texts(corp)[1:5]
+# take a look at the document names
+print(names(documents))
+```
+Phrasemachine provides one main function: `phrasemachine()`, which takes as 
+input a vector of strings (one string per document), or a `quanteda` corpus
+object. This function returns phrases extracted from the input documents in one
+of two forms. The first option, specified by selecting `return_phrase_vectors = TRUE`
+returns a list object. Each entry in the list object represents a document, and
+is a character vector with an extracted phrase as each entry in the vector. If
+`return_phrase_vectors = FALSE`, then a character vector is returned by the 
+function. Each entry in this character vector will be an extracted phrase, and
+the unigrams in these phrases will be underscore separated. Selecting this 
+option will allow the user to assign the resulting character vector back into 
+a `quanteda` corpus object for use in their normal preprocessing pipeline. 
+
+The minimum and maximum token length for phrases may be specified via 
+the `minimum_ngram_length` and `maximum_ngram_length` arguments, which default 
+to 1 and 8 respectively. The `regex` argument can be used to supply a custom 
+regular expression for phrase extration, but defaults to `"(A|N)*N(PD*(A|N)*N)*"`
+as in [Hander et al. (2016)](https://brenocon.com/handler2016phrases.pdf). If 
+`return_phrase_vectors = TRUE` then the user may additionally specify `return_tag_sequences = TRUE` (the default value is `FALSE`), to return the tag
+sequences associated with each phrase. This can be useful if the user wishes to
+perform further selection on specific tag patterns. 
+
+```{r eval=TRUE, fig.width=6, fig.height=6, fig.align ='center'}
+# run phrasemachine
+phrases <- phrasemachine(documents,
+                         minimum_ngram_length = 2,
+                         maximum_ngram_length = 8,
+                         return_phrase_vectors = TRUE,
+                         return_tag_sequences = TRUE)
+# look at some example phrases
+print(phrases[[1]]$phrases[1:10])
+```
+From here, the user may include the phrases extracted by `phrasemachine()` in 
+any downstream analyses. 

@@ -31,7 +31,7 @@ for (i in 1:length(phrase_spans)) {
     spans <- extract_ngram_filter(temp,
                                   regex = "(A|N)*N(PD*(A|N)*N)*",
                                   maximum_ngram_length = 8,
-                                  exclude_unigrams = TRUE)
+                                  minimum_ngram_length = 2)
     # turn into a string of spans fo the form {start,end}{start,end}
     if (!is.null(spans)) {
         # deal with the case where we only return one span

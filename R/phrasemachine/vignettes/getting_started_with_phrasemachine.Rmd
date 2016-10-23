@@ -29,7 +29,7 @@ Conference on Empirical Methods in Natural Language Processing*.
 This package relies on a part-of-speech (POS) tagger to extract phrases. The most 
 portable POS tagger available in R comes in the `OpenNLP` package. However, the POS
 tagger this package provides is not as accurate as the current state of the art
-taggers availalbe in software pakcages availabe for other languages (such as 
+taggers available in software packages available for other languages (such as 
 `Spacy` or `CoreNLP`). We intend to eventually incorporate other POS taggers into 
 this package, but for now, if you want the highest accuracy, we suggest using 
 the Python implementation of the package. In practice, there may not be a 
@@ -63,9 +63,9 @@ which will pull up this vignette!
 In general, you will need to have Java 1.8+ installed on your computer for the 
 `OpenNLP` package to work. There are a number of operating system specific 
 tutorials on the web, and most newer computers meet this requirement by default.
-However, we expect issues with Java to be the most common prolems users 
+However, we expect issues with Java to be the most common problems users 
 encounter when trying to install and use the `OpenNLP` package, which we use for
-POS tagging. In partcular, If you are trying to install this package on a newer
+POS tagging. In particular, If you are trying to install this package on a newer
 Mac computer (OS X 10.10+), you may encounter an error when trying to load the 
 package. We suggest you follow the instructions in the blog post 
 [**[here]**](http://conjugateprior.org/2014/12/r-java8-osx/) to configure R and
@@ -103,7 +103,7 @@ a `quanteda` corpus object for use in their normal preprocessing pipeline.
 The minimum and maximum token length for phrases may be specified via 
 the `minimum_ngram_length` and `maximum_ngram_length` arguments, which default 
 to 1 and 8 respectively. The `regex` argument can be used to supply a custom 
-regular expression for phrase extration, but defaults to `"(A|N)*N(PD*(A|N)*N)*"`
+regular expression for phrase extraction, but defaults to `"(A|N)*N(PD*(A|N)*N)*"`
 as in [Hander et al. (2016)](https://brenocon.com/handler2016phrases.pdf). If 
 `return_phrase_vectors = TRUE` then the user may additionally specify `return_tag_sequences = TRUE` (the default value is `FALSE`), to return the tag
 sequences associated with each phrase. This can be useful if the user wishes to

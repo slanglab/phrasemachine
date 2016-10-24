@@ -1,3 +1,8 @@
+## Resubmission
+This is a resubmission. In this version I have:
+
+* Removed the inst subdirectory where I had built the vignettes to look at them.
+
 ## Test environments
 * local OS X (10.11.6) install, R 3.3.1
 * win-builder (devel and release)

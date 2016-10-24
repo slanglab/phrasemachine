@@ -16,19 +16,11 @@ The software only supports English texts.
 
 #### Installation
 
-We have implementations in both R and Python.
-
-For Python, install with:
+We have implementations in both R and Python.  For Python, install with:
 
     pip install phrasemachine
 
-For R: we have not released on CRAN yet, but this may work in the meantime:
-
-    library(devtools)
-    install_github("slanglab/phrasemachine/R/phrasemachine")
-
-The rest of this document gives examples in Python; R-specific documentation is
-forthcoming.
+For the R version, [see the R vignette here](R/phrasemachine/vignettes/getting_started_with_phrasemachine.Rmd).
 
 #### Near duplicates and merging
 

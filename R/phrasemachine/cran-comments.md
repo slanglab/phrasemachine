@@ -1,5 +1,5 @@
 ## Test environments
-* local OS X (10.11.6) install, R 3.3.3
+* local OS X (10.11.6) install, R 3.3.1
 * win-builder (devel and release)
 * CentOS 6.8, R 3.3.1
 

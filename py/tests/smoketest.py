@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 
+from __future__ import print_function
+
 text = u"""
 Mr. Speaker, Mr. President, distinguished Members of the Congress, honored guests, and fellow citizens: 
 I come before you to report on the state of our Union, and I'm pleased to report that after 4 years of united effort, the American people have brought forth a nation renewed, stronger, freer, and more secure than before. 
@@ -88,24 +90,24 @@ Thank you, and God bless you.
 
 import phrasemachine
 phrases = phrasemachine.get_phrases(text)
-print "%s phrase types" % len(phrases['counts'])
-print "%s phrase hits" % sum(phrases['counts'].values())
-print "Top phrases:"
-print phrases['counts'].most_common(10)
+print("%s phrase types" % len(phrases['counts']))
+print("%s phrase hits" % sum(phrases['counts'].values()))
+print("Top phrases:")
+print(phrases['counts'].most_common(10))
 
-print "From crappy tokenization:"
+print("From crappy tokenization:")
 crappy_tokens = text.split()
-print phrasemachine.get_phrases(tokens=crappy_tokens)['counts'].most_common(10)
+print(phrasemachine.get_phrases(tokens=crappy_tokens)['counts'].most_common(10))
 
-print "Phrase spans"
+print("Phrase spans")
 phrases = phrasemachine.get_phrases(text, output=['token_spans','tokens'])
-print "%s phrase hits" % len(phrases['token_spans'])
-print phrases['token_spans'][:20]
-print phrases['token_spans'][-20:]
+print("%s phrase hits" % len(phrases['token_spans']))
+print(phrases['token_spans'][:20])
+print(phrases['token_spans'][-20:])
 
-print "First several phrase hits"
-print [(s,e, phrases['tokens'][s:e]) for (s,e) in phrases['token_spans'][:10]]
+print("First several phrase hits")
+print([(s,e, phrases['tokens'][s:e]) for (s,e) in phrases['token_spans'][:10]])
 
-print "From crappy tokenization"
+print("From crappy tokenization")
 xx = phrasemachine.get_phrases(tokens=crappy_tokens, output='token_spans')['token_spans']
-print [(s,e, crappy_tokens[s:e]) for (s,e) in xx[:10]]
+print([(s,e, crappy_tokens[s:e]) for (s,e) in xx[:10]])

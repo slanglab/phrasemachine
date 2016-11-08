@@ -3,13 +3,21 @@ Noun phrase extraction using Python's regular expression library.
 Only for the "SimpleNP" grammar.
 
 """
+
+from __future__ import print_function
+
 from pkg_resources import resource_filename
 import sys,re,os
 from collections import Counter
 
 def logmsg(s):
     # would be better to use python logger
-    print>>sys.stderr, "[phrasemachine] %s" % s
+    print("[phrasemachine] %s" % s, file=sys.stderr)
+
+py2 = sys.version_info[0] == 2
+
+if not py2:
+    xrange = range
 
 ############## SimpleNP
 ## Uses a five-tag coarse grammar.
@@ -255,7 +263,11 @@ def get_phrases(text=None, tokens=None, postags=None, tagger='nltk', grammar='Si
 
     ## try to get values for both 'postags' and 'tokens', parallel lists of strings
     if postags is None:
-        if isinstance(tagger, (str,unicode)):
+        if py2:
+            str_unicode = (str, unicode)
+        else:
+            str_unicode = str
+        if isinstance(tagger, str_unicode):
             assert tagger in TAGGER_NAMES, "We don't support tagger %s" % tagger
             tagger = TAGGER_NAMES[tagger]()
         # otherwise, assume it's one of our wrapper *Tagger objects

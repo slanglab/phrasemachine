@@ -1,4 +1,8 @@
-from distutils.core import setup
+try:
+  from setuptools import setup
+except ImportError:  # setuptools isn't available
+  from distutils.core import setup
+
 setup(
   name = 'phrasemachine',
   packages = ['phrasemachine', 'phrasemachine.data'], # this must be the same as the name above

@@ -157,7 +157,7 @@ class NLTKTagger:
 
         all_tokens = []
         for sent in sents:
-            tokens = self.tokenize(text)
+            tokens = self.tokenize(sent)
             all_tokens = all_tokens + tokens
             word_pos_pairs = word_pos_pairs + self.tagger.tag(tokens)
         return {'tokens': all_tokens, 'pos': [tag for (w,tag) in word_pos_pairs]}

@@ -114,6 +114,8 @@ def extract_JK(pos_seq):
 ########
 
 def unicodify(s, encoding='utf8', errors='ignore'):
+    if not py2:  # strings are already in unicode by default in python 3
+        return s
     # Force conversion to unicode
     if isinstance(s,unicode): return s
     if isinstance(s,str): return s.decode(encoding, errors)
@@ -127,7 +129,7 @@ def safejoin(list_of_str_or_unicode):
         return u""
     if isinstance(xx[0],str):
         return ' '.join(xx)
-    if isinstance(xx[0],unicode):
+    if py2 and isinstance(xx[0],unicode):  # make sure this doesn't run in py3
         return u' '.join(xx)
 
 #########

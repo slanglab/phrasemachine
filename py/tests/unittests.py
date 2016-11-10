@@ -53,3 +53,8 @@ def test_len_toks_equals_len_tags_nltk():
     # http://doc.pytest.org/en/latest/skipping.html#skipping-on-a-missing-import-dependency
     x = pm.get_stdeng_nltk_tagger().tag_text(text)
     assert len(x['tokens']) == len(x['pos'])
+
+def test_multisentence():
+    pp = pm.get_phrases("blue table. blue table. blue table.")
+    print pp
+    assert len(pp['counts'])==1  ## should be just 'blue table'.  if buggy, it can pick up spans across sentences

@@ -36,4 +36,35 @@ test_that("Unit test for specific tag patterns", {
     expect_equal(c(spans), correct)
 
 
+    # try out NP + VP phrases without coordination
+    get_spans <- function(pos_tags, minimum_ngram_length) {
+        spans <- extract_ngram_filter(pos_tags,
+                                      regex = "PhrasesNoCoord",
+                                      maximum_ngram_length = 8,
+                                      minimum_ngram_length = minimum_ngram_length)
+        return(spans)
+    }
+
+    pos_tags = c("VB", "CC", "VB", "JJ", "NN", "NN")
+    spans <- get_spans(pos_tags, minimum_ngram_length = 2)
+
+    correct <- c(4, 4, 5, 3, 3, 5, 6, 6, 5, 6)
+    expect_equal(c(spans), correct)
+
+
+    # now try with coordnation
+    get_spans <- function(pos_tags, minimum_ngram_length) {
+        spans <- extract_ngram_filter(pos_tags,
+                                      regex = "Phrases",
+                                      maximum_ngram_length = 8,
+                                      minimum_ngram_length = minimum_ngram_length)
+        return(spans)
+    }
+
+    pos_tags = c("VB", "CC", "VB", "JJ", "NN", "NN")
+    spans <- get_spans(pos_tags, minimum_ngram_length = 2)
+
+    correct <- c(4, 4, 5, 1, 1, 3, 3, 5, 6, 6, 5, 6, 5, 6)
+    expect_equal(c(spans), correct)
+
 })

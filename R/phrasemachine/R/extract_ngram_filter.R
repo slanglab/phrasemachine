@@ -68,7 +68,11 @@ extract_ngram_filter <- function(pos_tags,
         return(NULL)
     } else {
         # now subset down the spans
-        spans <- spans[1:(span_counter-1),]
+        if (span_counter==2){
+            spans <- t(as.matrix(spans[1:(span_counter-1),]))
+        } else {
+            spans <- spans[1:(span_counter-1),]
+        }
         # return the spans
         return(spans)
     }

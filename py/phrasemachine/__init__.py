@@ -1,1 +1,1 @@
-from phrasemachine import *
+from .phrasemachine import *

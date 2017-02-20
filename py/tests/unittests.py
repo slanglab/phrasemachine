@@ -4,6 +4,9 @@
 # or
 # py.test -s tests/unittests.py
 
+from __future__ import print_function
+
+
 import sys,os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 import phrasemachine as pm
@@ -56,5 +59,5 @@ def test_len_toks_equals_len_tags_nltk():
 
 def test_multisentence():
     pp = pm.get_phrases("blue table. blue table. blue table.")
-    print pp
+    print(pp)
     assert len(pp['counts'])==1  ## should be just 'blue table'.  if buggy, it can pick up spans across sentences

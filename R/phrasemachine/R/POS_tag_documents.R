@@ -4,6 +4,11 @@
 #' tagger
 #'
 #' @param documents A vector of strings (one per document).
+#' @param memory The default amount of memory (512MB) assigned to the NLP
+#' package to POS tag documents is often not enough for large documents, which
+#' can lead to a "java.lang.OutOfMemoryError". The memory argument defaults to
+#' "-Xmx2g" (2GB) in this package, and can be increased if necessary to
+#' accomodate very large documents.
 #' @return A list object.
 #' @examples
 #' \dontrun{
@@ -15,7 +20,11 @@
 #' tagged_documents <- POS_tag_documents(documents)
 #' }
 #' @export
-POS_tag_documents <- function(documents){
+POS_tag_documents <- function(documents,
+                              memory = "-Xmx2g"){
+
+    # set the amount of heap space available to Java in the NLP package
+    options(java.parameters = memory)
 
     # NULL out to deal with R CMD check note
     type <- NULL

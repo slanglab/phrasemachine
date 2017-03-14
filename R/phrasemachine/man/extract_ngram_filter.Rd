@@ -33,4 +33,3 @@ spans <- extract_ngram_filter(pos_tags,
                               maximum_ngram_length = 8,
                               minimum_ngram_length = 1)
 }
-

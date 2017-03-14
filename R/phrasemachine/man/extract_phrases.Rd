@@ -58,4 +58,3 @@ phrases <- extract_phrases(tagged_documents,
                            minimum_ngram_length = 1)
 }
 }
-

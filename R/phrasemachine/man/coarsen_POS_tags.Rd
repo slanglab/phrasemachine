@@ -24,4 +24,3 @@ NOTE: 'M', 'C', and 'V' tags are currently only compatible with the PTB tagset.
 pos_tags <- c("VB", "JJ", "NN", "NN")
 coarsen_POS_tags(pos_tags)
 }
-

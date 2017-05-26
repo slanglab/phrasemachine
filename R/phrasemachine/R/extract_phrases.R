@@ -6,12 +6,9 @@
 #' `POS_tag_documents()` function, with either Penn TreeBank or Petrov/Gimpel
 #' style tags.
 #' @param regex The regular expression used to find phrases. Defaults to
-#' "(A|N)*N(PD*(A|N)*N)*", the "SimpleNP" grammar in Handler et al. 2016. Can
-#' also be "PhrasesNoCoord", which will be substituted for more complex noun
-#' and verb-argument phrases (without coordination), or "Phrases", which will
-#' be substituted for a very complex regular expression capturing noun and
-#' verb-argument phrases with coordination. A vector of regular expressions may
-#' also be provided if the user wishes to match more than one.
+#' "(A|N)*N(PD*(A|N)*N)*", the "SimpleNP" grammar in Handler et al. 2016. A
+#' vector of regular expressions may also be provided if the user wishes to
+#' match more than one.
 #' @param maximum_ngram_length The maximum length phrases returned. Defaults to
 #' 8. Increasing this number can greatly increase runtime.
 #' @param minimum_ngram_length The minimum length phrases returned. Defaults to
@@ -27,8 +24,10 @@
 #' @examples
 #' \dontrun{
 #' # load data
-#' corp <- quanteda::corpus(quanteda::inaugTexts)
-#' documents <- quanteda::texts(corp)[1:5]
+#' # load in U.S. presidential inaugural speeches from Quanteda example data.
+#' documents <- quanteda::data_corpus_inaugural
+#' # use first 10 documents for example
+#' documents <- documents[1:10,]
 #'
 #' # run tagger
 #' tagged_documents <- POS_tag_documents(documents)

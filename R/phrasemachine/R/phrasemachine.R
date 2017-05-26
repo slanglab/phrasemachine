@@ -4,12 +4,9 @@
 #'
 #' @param documents A vector of strings (one per document).
 #' @param regex The regular expression used to find phrases. Defaults to
-#' "(A|N)*N(PD*(A|N)*N)*", the "SimpleNP" grammar in Handler et al. 2016. Can
-#' also be "PhrasesNoCoord", which will be substituted for more complex noun
-#' and verb-argument phrases (without coordination), or "Phrases", which will
-#' be substituted for a very complex regular expression capturing noun and
-#' verb-argument phrases with coordination. A vector of regular expressions may
-#' also be provided if the user wishes to match more than one.
+#' "(A|N)*N(PD*(A|N)*N)*", the "SimpleNP" grammar in Handler et al. 2016. A
+#' vector of regular expressions may also be provided if the user wishes to
+#' match more than one.
 #' @param maximum_ngram_length The maximum length phrases returned. Defaults to
 #' 8. Increasing this number can greatly increase runtime.
 #' @param minimum_ngram_length The minimum length phrases returned. Defaults to

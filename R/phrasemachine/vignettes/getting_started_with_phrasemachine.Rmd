@@ -80,11 +80,12 @@ package. In this example, we will make use of 5 U.S. presidential inaugural
 speeches.
 ```{r eval=TRUE, fig.width=6, fig.height=6, fig.align ='center'}
 library(phrasemachine)
+library(quanteda)
 
 # load in U.S. presidential inaugural speeches from Quanteda example data.
-corp <- quanteda::corpus(quanteda::inaugTexts)
-# use first 5 documents for example
-documents <- quanteda::texts(corp)[1:5]
+documents <- quanteda::data_corpus_inaugural
+# use first 10 documents for example
+documents <- documents[1:10,]
 # take a look at the document names
 print(names(documents))
 ```

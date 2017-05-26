@@ -1,12 +1,7 @@
-## Resubmission
-This is a resubmission. In this version I have:
-
-* Removed the inst subdirectory where I had built the vignettes to look at them.
-
 ## Test environments
-* local OS X (10.11.6) install, R 3.3.1
+* local OS X (10.11.6) install, R 3.4.0
 * win-builder (devel and release)
-* CentOS 6.8, R 3.3.1
+* CentOS 6.8, R 3.4.0
 
 ## R CMD check results
 There were no ERRORs or WARNINGs on Windows, OS X, or Linux. There was a single NOTE regarding the spelling of "un-processed" in our DESCRIPTION file, but we believe it is correctly spelled. 

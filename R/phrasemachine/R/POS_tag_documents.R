@@ -7,7 +7,7 @@
 #' @param memory The default amount of memory (512MB) assigned to the NLP
 #' package to POS tag documents is often not enough for large documents, which
 #' can lead to a "java.lang.OutOfMemoryError". The memory argument defaults to
-#' "-Xmx2g" (2GB) in this package, and can be increased if necessary to
+#' "-Xmx512M" (512MB) in this package, and can be increased if necessary to
 #' accomodate very large documents.
 #' @return A list object.
 #' @examples
@@ -21,7 +21,7 @@
 #' }
 #' @export
 POS_tag_documents <- function(documents,
-                              memory = "-Xmx2g"){
+                              memory = "-Xmx512M"){
 
     # set the amount of heap space available to Java in the NLP package
     options(java.parameters = memory)

@@ -24,7 +24,7 @@
 #' @param memory The default amount of memory (512MB) assigned to the NLP
 #' package to POS tag documents is often not enough for large documents, which
 #' can lead to a "java.lang.OutOfMemoryError". The memory argument defaults to
-#' "-Xmx2g" (2GB) in this package, and can be increased if necessary to
+#' "-Xmx512M" (512MB) in this package, and can be increased if necessary to
 #' accomodate very large documents.
 #' @examples
 #' phrasemachine("Hello there my red good cat.")
@@ -36,7 +36,7 @@ phrasemachine <- function(documents,
                           minimum_ngram_length = 2,
                           return_phrase_vectors = TRUE,
                           return_tag_sequences = FALSE,
-                          memory = "-Xmx2g") {
+                          memory = "-Xmx512M") {
 
     # tag documents
     tagged_documents <- POS_tag_documents(documents,

@@ -4,7 +4,7 @@
 \alias{POS_tag_documents}
 \title{POS tag documents}
 \usage{
-POS_tag_documents(documents, memory = "-Xmx2g")
+POS_tag_documents(documents, memory = "-Xmx512M")
 }
 \arguments{
 \item{documents}{A vector of strings (one per document).}
@@ -12,7 +12,7 @@ POS_tag_documents(documents, memory = "-Xmx2g")
 \item{memory}{The default amount of memory (512MB) assigned to the NLP
 package to POS tag documents is often not enough for large documents, which
 can lead to a "java.lang.OutOfMemoryError". The memory argument defaults to
-"-Xmx2g" (2GB) in this package, and can be increased if necessary to
+"-Xmx512M" (512MB) in this package, and can be increased if necessary to
 accomodate very large documents.}
 }
 \value{

@@ -13,8 +13,8 @@
 #' @examples
 #' \dontrun{
 #' # load data
-#' corp <- quanteda::corpus(quanteda::inaugTexts)
-#' documents <- quanteda::texts(corp)[1:5]
+#' documents <- quanteda::data_corpus_inaugural
+#  documents <- documents[1:10,]
 #'
 #' # run tagger
 #' tagged_documents <- POS_tag_documents(documents)

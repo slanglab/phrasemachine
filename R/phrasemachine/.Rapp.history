@@ -1,0 +1,27 @@
+3+4
+6-12340
+my_matrix <- matrix(data = c(1:25), #
+                    ncol = 5, #
+                    nrow = 5, #
+                    byrow = T)
+my_matrix
+ls()
+?runif
+runif(100)
+set.seed(12345)
+runif(10)
+set.seed(12345)
+runif(10)
+round(runif(1,min = 10,max=30))
+Sys.sleep(round(runif(1,min = 10,max=30)))
+256^4
+load("/Users/matthewjdenny/Dropbox/Research/Preprocessing_Decisions/Data/Press_Release_Prep/perplexities_13.RData")
+perplexities
+theta.instar <- seq(-10,10,length.out = 200)
+cbind(theta.instar,1:200)
+3+4
+4/7
+5*12
+a = 51
+setwd("/Users/matthewjdenny/Documents/Research/Congressional_Bill_Language/EMNLP_2016/phrasemachine/R/phrasemachine")
+devtools::check(document = FALSE)

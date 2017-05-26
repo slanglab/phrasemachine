@@ -22,7 +22,7 @@
 #' package to POS tag documents is often not enough for large documents, which
 #' can lead to a "java.lang.OutOfMemoryError". The memory argument defaults to
 #' "-Xmx512M" (512MB) in this package, and can be increased if necessary to
-#' accomodate very large documents.
+#' accommodate very large documents.
 #' @examples
 #' phrasemachine("Hello there my red good cat.")
 #' @return A list object.

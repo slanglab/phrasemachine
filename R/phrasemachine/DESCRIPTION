@@ -1,7 +1,7 @@
 Package: phrasemachine
 Type: Package
 Title: Simple Phrase Extraction
-Version: 1.1.2
+Version: 1.2.0
 Date: 2017-05-29
 Author: Matthew J. Denny, Abram Handler, Brendan O'Connor
 Maintainer: Matthew J. Denny <mdenny@psu.edu>

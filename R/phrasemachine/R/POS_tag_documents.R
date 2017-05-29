@@ -12,7 +12,9 @@
 #' @return A list object.
 #' @examples
 #' \dontrun{
-#' # load data
+#' # make sure quanteda is installed
+#' requireNamespace("quanteda", quietly = TRUE)
+#' # load some example data:
 #' documents <- quanteda::data_corpus_inaugural
 #  documents <- documents[1:10,]
 #'

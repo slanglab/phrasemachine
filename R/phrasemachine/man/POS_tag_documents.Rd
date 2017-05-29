@@ -25,7 +25,9 @@ tagger
 }
 \examples{
 \dontrun{
-# load data
+# make sure quanteda is installed
+requireNamespace("quanteda", quietly = TRUE)
+# load some example data:
 documents <- quanteda::data_corpus_inaugural
 
 # run tagger

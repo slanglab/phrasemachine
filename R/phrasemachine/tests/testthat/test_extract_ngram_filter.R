@@ -1,4 +1,4 @@
-context("Span Extractor")
+  context("Span Extractor")
 test_that("Unit test for specific tag patterns", {
 
     get_spans <- function(pos_tags, minimum_ngram_length) {

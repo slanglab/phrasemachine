@@ -23,7 +23,8 @@
 #' @return A list object.
 #' @examples
 #' \dontrun{
-#' # load data
+#' # make sure quanteda is installed
+#' requireNamespace("quanteda", quietly = TRUE)
 #' # load in U.S. presidential inaugural speeches from Quanteda example data.
 #' documents <- quanteda::data_corpus_inaugural
 #' # use first 10 documents for example

@@ -58,6 +58,10 @@ def test_bad_counts_example():
     phrases = pm.get_phrases("Social security is a law. Gravity is one too. Cheeseburgers are tasty.")
     assert phrases['counts']['social security'] == 1
 
+def test_bad_counts_example_2():
+    phrases = pm.get_phrases("Social security is a law. Gravity is one too. Cheeseburgers are tasty. Social security is in a lockbox.")
+    assert phrases['counts']['social security'] == 2
+
 def test_multisentence():
     pp = pm.get_phrases("blue table. blue table. blue table.")
     print pp

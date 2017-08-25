@@ -7,7 +7,7 @@ setup(
   author = 'slanglab, University of Massachusetts, Amherst',
   author_email = 'abram.handler@gmail.com',
   url = 'https://github.com/slanglab/phrasemachine', # use the URL to the github repo
-  download_url = 'https://github.com/slanglab/phrasemachine/tarball/1.0.1',
+  download_url = 'https://github.com/slanglab/phrasemachine/tarball/1.0.3',
   keywords = ['nlp', 'nlproc'], # arbitrary keywords
   install_requires=['nltk'],
   classifiers = [],

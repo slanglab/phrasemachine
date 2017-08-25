@@ -54,6 +54,10 @@ def test_len_toks_equals_len_tags_nltk():
     x = pm.get_stdeng_nltk_tagger().tag_text(text)
     assert len(x['tokens']) == len(x['pos'])
 
+def test_bad_counts_example():
+    phrases = pm.get_phrases("Social security is a law. Gravity is one too. Cheeseburgers are tasty.")
+    assert phrases['counts']['social security'] == 1
+
 def test_multisentence():
     pp = pm.get_phrases("blue table. blue table. blue table.")
     print pp

@@ -29,7 +29,7 @@ You might notice that phrasemachine sometimes extracts nested phrases. For insta
     text = "The Omnibus Crime Control and Safe Streets Act of 1968 was signed into law by President Lyndon B. Johnson"
     phrasemachine.get_phrases(text)
 
-extracts 'lyndon b. johnson' and 'b. johnson'. 
+extracts 'lyndon b. johnson' and 'b. johnson'.
 
 This is intentional: phrasemachine tries to extract **all** phrases that might be useful for downstream analysis. In some cases, you might want to try to merge similar, overlapping or cofererent terms. For strategies, see section 4.3.1 from our paper: [Bag of What?](http://brenocon.com/handler2016phrases.pdf)
 
@@ -87,15 +87,22 @@ More details can be found in [this paper](http://brenocon.com/handler2016phrases
  default.  It does the FullNP grammar as specified in the paper.  Since the
  dependencies can be difficult to run, the main implementations above use what
  the paper calls SimpleNP grammar with the FilterFSA matching method.
- 
+
 #### Comparing R and Python implementations
 
-The R and Python implementations of POS tagging currently rely on different libraries, and will thus give different results. However, given the same input POS tag sequences, both implementations will return identical results. To verify that this is the case, simply navigate to the `R/comparison_tests` directory, then run the `run_POS_to_spans_test.sh` shell script. This can be done using the following lines of code (assuming you are in the top level directory for this repo). 
+The R and Python implementations of POS tagging currently rely on different libraries, and will thus give different results. However, given the same input POS tag sequences, both implementations will return identical results. To verify that this is the case, simply navigate to the `R/comparison_tests` directory, then run the `run_POS_to_spans_test.sh` shell script. This can be done using the following lines of code (assuming you are in the top level directory for this repo).
 
 	cd R/comparison_tests
 	bash run_POS_to_spans_test.sh
-	
+
 The script will produce a set of phrase spans using both implementations and print out any mismatches between the two sets of results.
+
+#### Projects using phrasemachine
+
+Email abram.handler@gmail.com to add your project to the list!
+
+- Adam Lauretig at Ohio State uses phrasemachine for his project, ''Do Casualties Change the Conversation?''.
+- A team at Northeastern uses phrasemachine to explore the [ideology of journalists](https://drive.google.com/file/d/0B8CcT_0LwJ8QVnJMR1QzcGNuTkk/view). 
 
 #### Acknowledgment
 

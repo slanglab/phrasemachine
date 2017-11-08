@@ -1,4 +1,4 @@
-from distutils.core import setup
+from setuptools import setup
 setup(
   name = 'phrasemachine',
   packages = ['phrasemachine', 'phrasemachine.data'], # this must be the same as the name above
@@ -9,7 +9,14 @@ setup(
   url = 'https://github.com/slanglab/phrasemachine', # use the URL to the github repo
   download_url = 'https://github.com/slanglab/phrasemachine/tarball/1.0.3',
   keywords = ['nlp', 'nlproc'], # arbitrary keywords
-  install_requires=['nltk'],
+  install_requires = [
+      'future',
+      'nltk'
+  ],
+  extra_requires = {
+      # Optional requirements for Spacy tagger
+      'spacy': ['spacy']
+  },
   classifiers = [],
   package_data={'phrasemachine.data': ['averaged_perceptron_tagger.pickle', 'punkt.english.pickle']},
 )

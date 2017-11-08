@@ -1,0 +1,4 @@
+# ignore python build
+/build/
+/dist/
+*.egg-info

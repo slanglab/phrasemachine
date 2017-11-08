@@ -3,13 +3,15 @@ Noun phrase extraction using Python's regular expression library.
 Only for the "SimpleNP" grammar.
 
 """
+from __future__ import absolute_import, print_function, unicode_literals
+from builtins import bytes, str, zip, range, object
 from pkg_resources import resource_filename
 import sys,re,os
 from collections import Counter
 
 def logmsg(s):
     # would be better to use python logger
-    print>>sys.stderr, "[phrasemachine] %s" % s
+    print("[phrasemachine] %s" % s, file=sys.stderr)
 
 ############## SimpleNP
 ## Uses a five-tag coarse grammar.
@@ -41,7 +43,7 @@ coarsemap = {
 # NP     = "{BaseNP}({PP} )*".format(**globals())
 
 tag2coarse = {}
-for coarsetag,inputtags in coarsemap.items():
+for coarsetag,inputtags in list(coarsemap.items()):
     for intag in inputtags:
         assert intag not in tag2coarse
         tag2coarse[intag] = coarsetag
@@ -75,8 +77,8 @@ def extract_ngram_filter(pos_seq, regex=SimpleNP, minlen=1, maxlen=8):
     Returns token position spans of valid ngrams."""
     ss = coarse_tag_str(pos_seq)
     def gen():
-        for s in xrange(len(ss)):
-            for n in xrange(minlen, 1 + min(maxlen, len(ss)-s)):
+        for s in range(len(ss)):
+            for n in range(minlen, 1 + min(maxlen, len(ss)-s)):
                 e = s+n
                 substr = ss[s:e]
                 if re.match(regex + "$", substr):
@@ -84,12 +86,12 @@ def extract_ngram_filter(pos_seq, regex=SimpleNP, minlen=1, maxlen=8):
     return list(gen())
 
 def extract_JK(pos_seq):
-    """The 'JK' method in Handler et al. 2016.  
+    """The 'JK' method in Handler et al. 2016.
     Returns token positions of valid ngrams."""
 
     def find_ngrams(input_list, num_):
         '''get ngrams of len n from input list'''
-        return zip(*[input_list[i:] for i in range(num_)])
+        return list(zip(*[input_list[i:] for i in range(num_)]))
 
     # copied from M and S chp 5'''
     patterns = set(['AN', 'NN', 'AAN', 'ANN', 'NAN', 'NNN', 'NPN'])
@@ -100,31 +102,35 @@ def extract_JK(pos_seq):
         return "".join(a[1] for a in s)
     def positionify(s):
         return tuple(a[0] for a in s)
-    ngrams = filter(lambda x: stringify(x) in patterns, ngrams)
+    ngrams = [x for x in ngrams if stringify(x) in patterns]
     return [set(positionify(n)) for n in ngrams]
 
 ########
 
 def unicodify(s, encoding='utf8', errors='ignore'):
-    # Force conversion to unicode
-    if isinstance(s,unicode): return s
-    if isinstance(s,str): return s.decode(encoding, errors)
-    return unicode(s)
+    # # Force conversion to unicode
+    # if isinstance(s,str): return s
+    # if isinstance(s,str): return s.decode(encoding, errors)
+    if isinstance(s, str): return s
+    if isinstance(s, bytes): return str(s, encoding=encoding, errors=errors)
+    return str(s)
 
 def safejoin(list_of_str_or_unicode):
     ## can accept a list of str objects, or a list of unicodes.
     ## safely joins them, returning the same type.
     xx = list_of_str_or_unicode
     if not xx:
-        return u""
-    if isinstance(xx[0],str):
-        return ' '.join(xx)
-    if isinstance(xx[0],unicode):
-        return u' '.join(xx)
+        return str("")
+    else:
+        return str(" ".join((str(x) for x in xx)))
+    # if isinstance(xx[0],str):
+    #     return ' '.join(xx)
+    # if isinstance(xx[0],str):
+    #     return u' '.join(xx)
 
 #########
 
-class NLTKTagger:
+class NLTKTagger(object):
     '''
     class that supplies part of speech tags using NLTK
     note: avoids the NLTK downloader (see __init__ method)
@@ -151,7 +157,7 @@ class NLTKTagger:
     def tag_text(self, text):
         '''take input text and return tokens w/ part of speech tags using NLTK'''
         # putting import here instead of top of file b.c. not all will have nltk installed
-        
+
         sents = self.sent_detector.tokenize(text)    # TODO: this will fail on some unicode chars. I think assumes ascii
         word_pos_pairs = []
 
@@ -181,7 +187,7 @@ def get_stdeng_nltk_tagger(suppress_errors=False):
 
 SPACY_WRAPPER = None
 
-class SpacyTagger:
+class SpacyTagger(object):
     # https://spacy.io/
     def __init__(self):
         self.spacy_object = None
@@ -225,7 +231,7 @@ TAGGER_NAMES = {
 
 def get_phrases(text=None, tokens=None, postags=None, tagger='nltk', grammar='SimpleNP', regex=None, minlen=2, maxlen=8, output='counts'):
     """Give a text (or POS tag sequence), return the phrases matching the given
-    grammar.  Works on documents or sentences.  
+    grammar.  Works on documents or sentences.
     Returns a dict with one or more keys with the phrase information.
 
     text: the text of the document.  If supplied, we will try to POS tag it.
@@ -255,11 +261,11 @@ def get_phrases(text=None, tokens=None, postags=None, tagger='nltk', grammar='Si
 
     ## try to get values for both 'postags' and 'tokens', parallel lists of strings
     if postags is None:
-        if isinstance(tagger, (str,unicode)):
-            assert tagger in TAGGER_NAMES, "We don't support tagger %s" % tagger
+        if isinstance(tagger, str) or isinstance(tagger, bytes):
+            tagger = str(tagger)
+            assert tagger in TAGGER_NAMES.keys(), "We don't support tagger %s" % tagger
             tagger = TAGGER_NAMES[tagger]()
         # otherwise, assume it's one of our wrapper *Tagger objects
-
         d = None
         if tokens is not None:
             d = tagger.tag_tokens(tokens)
@@ -280,8 +286,9 @@ def get_phrases(text=None, tokens=None, postags=None, tagger='nltk', grammar='Si
 
     ## Handle multiple possible return info outputs
 
-    if isinstance(output, str):
-        output = [output]
+    if isinstance(output, bytes) or isinstance(output, str):
+        output = [str(output)]
+
 
     our_options = set()
     def retopt(x):
@@ -295,7 +302,7 @@ def get_phrases(text=None, tokens=None, postags=None, tagger='nltk', grammar='Si
     if retopt('counts'):
         counts = Counter()
         for (start,end) in phrase_tokspans:
-            phrase = safejoin([tokens[i] for i in xrange(start,end)])
+            phrase = safejoin([tokens[i] for i in range(start,end)])
             phrase = phrase.lower()
             counts[phrase] += 1
         ret['counts'] = counts

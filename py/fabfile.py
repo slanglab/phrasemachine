@@ -6,6 +6,9 @@ from fabric.api import local
 # git push --tags origin master
 # update setup.py in 2 places
 
+def test():
+    local("pytest tests/")
+
 def deploy():
     local("git push --tags origin master")
     local("python setup.py sdist")

@@ -5,10 +5,10 @@ represent the concept "social security"; the words "New" and "York" don't
 really represent "New York." Phrasemachine identifies these sort of multiword
 phrases automatically so you can use them in text analysis. Here's how it works in Python.
 
-    import phrasemachine
-    text = "Barack Obama supports expanding social security."
-    print phrasemachine.get_phrases(text)
-    {'counts': Counter({'social security': 1, 'barack obama': 1})}
+    $ import phrasemachine
+    $ text = "Barack Obama supports expanding social security."
+    $ phrasemachine.get_phrases(text)
+    {'num_tokens': 7, 'counts': Counter({'barack obama': 1, 'social security': 1})}
 
 For more details, see our paper: [Bag of What?](http://brenocon.com/handler2016phrases.pdf), or [this slidedeck](http://brenocon.com/oconnor_textasdata2016.pdf).  By default, this package uses the (FilterFSA, k=8, SimpleNP) method from the paper.
 

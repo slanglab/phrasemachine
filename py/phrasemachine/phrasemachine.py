@@ -7,9 +7,16 @@ from pkg_resources import resource_filename
 import sys,re,os
 from collections import Counter
 
+
+
 def logmsg(s):
     # would be better to use python logger
     print>>sys.stderr, "[phrasemachine] %s" % s
+
+
+
+if sys.version_info[0] >= 3:
+    xrange = range
 
 ############## SimpleNP
 ## Uses a five-tag coarse grammar.
@@ -107,9 +114,15 @@ def extract_JK(pos_seq):
 
 def unicodify(s, encoding='utf8', errors='ignore'):
     # Force conversion to unicode
-    if isinstance(s,unicode): return s
-    if isinstance(s,str): return s.decode(encoding, errors)
-    return unicode(s)
+    if sys.version_info[0] < 3:
+        if isinstance(s, unicode): return s
+        if isinstance(s, str): return s.decode(encoding, errors)
+        return unicode(s)
+    else:
+        if type(s) == bytes:
+            return s.decode('utf8')
+        else:
+            return s
 
 def safejoin(list_of_str_or_unicode):
     ## can accept a list of str objects, or a list of unicodes.
@@ -119,8 +132,15 @@ def safejoin(list_of_str_or_unicode):
         return u""
     if isinstance(xx[0],str):
         return ' '.join(xx)
-    if isinstance(xx[0],unicode):
-        return u' '.join(xx)
+
+    if isinstance(xx[0], bytes):
+        return ' '.join(xx)
+
+    if sys.version_info[0] < 3:
+        if isinstance(xx[0],unicode):
+            return u' '.join(xx)
+
+    raise Exception("Bad input to safejoin:", list_of_str_or_unicode)
 
 #########
 
@@ -255,9 +275,10 @@ def get_phrases(text=None, tokens=None, postags=None, tagger='nltk', grammar='Si
 
     ## try to get values for both 'postags' and 'tokens', parallel lists of strings
     if postags is None:
-        if isinstance(tagger, (str,unicode)):
-            assert tagger in TAGGER_NAMES, "We don't support tagger %s" % tagger
+        try:
             tagger = TAGGER_NAMES[tagger]()
+        except:
+            raise Exception("We don't support tagger %s" % tagger)
         # otherwise, assume it's one of our wrapper *Tagger objects
 
         d = None

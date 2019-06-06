@@ -12,6 +12,11 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 import phrasemachine as pm
 import pytest
 
+
+def test_custom_regex():
+    out = pm.get_phrases(tokens=["the", "red", "car"], postags=["D", "A", "N"], regex='DA')
+    assert "the red" in set(out["counts"].keys()), "custom regex should work"
+
 def test_ark_tags():
     '''
     If the user has provided coarsened tags in the 5 tag system (e.g. the ran ark tagger) 

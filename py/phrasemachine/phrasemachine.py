@@ -297,7 +297,7 @@ def get_phrases(text=None, tokens=None, postags=None, tagger='nltk', grammar='Si
         else:
             assert False, "Don't know grammar %s" % grammar
 
-    phrase_tokspans = extract_ngram_filter(postags, minlen=minlen, maxlen=maxlen)
+    phrase_tokspans = extract_ngram_filter(postags, regex=regex, minlen=minlen, maxlen=maxlen)
 
     ## Handle multiple possible return info outputs
 

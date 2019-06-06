@@ -26,10 +26,10 @@ if sys.version_info[0] >= 3:
 # "Coarse*" indicates petrov/gimpel
 # Grammar change from the FST version: can't repeat NUM in both adj and noun.
 coarsemap = {
-'A': "JJ JJR JJS CoarseADJ CD CoarseNUM".split(),
-'D': "DT CoarseDET".split(),
-'P': "IN TO CoarseADP".split(),
-'N': "NN NNS NNP NNPS FW CoarseNOUN".split(),
+'A': "JJ JJR JJS CoarseADJ CD CoarseNUM A".split(),
+'D': "DT CoarseDET D".split(),
+'P': "IN TO CoarseADP P".split(),
+'N': "NN NNS NNP NNPS FW CoarseNOUN N".split(),
 # all other tags get O
 }
 

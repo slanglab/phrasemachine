@@ -12,6 +12,14 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 import phrasemachine as pm
 import pytest
 
+def test_ark_tags():
+    '''
+    If the user has provided coarsened tags in the 5 tag system (e.g. the ran ark tagger) 
+    then phrasemachine should still work
+    '''    
+    phrases = pm.get_phrases(tokens=["red", "car"], postags=["A", "N"])
+    assert "red car" in set(phrases["counts"].keys()), "used to break before coarsened tags added to coarsemap in phrasemachine.py"
+
 def test_pos():
     def go(tags, **kwargs):
         pp = pm.get_phrases(postags=tags, output='token_spans', **kwargs)

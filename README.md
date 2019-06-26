@@ -59,7 +59,7 @@ and comfortable with POS tagging yourself, all you really need is the
 
 #### What tagsets are supported? 
 
-Different POS tagging schemes use different tagsets (i.e. possible POS tags). `phrasemachine` supports the following:
+Different POS tagging schemes use different tagsets (i.e. possible POS tags). The python version of `phrasemachine` supports the following:
 
 - [Universal POS tags](https://universaldependencies.org/u/pos/)
 - [Penn Treebank tags](https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html)

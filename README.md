@@ -33,24 +33,40 @@ extracts 'lyndon b. johnson' and 'b. johnson'.
 
 This is intentional: phrasemachine tries to extract **all** phrases that might be useful for downstream analysis. In some cases, you might want to try to merge similar, overlapping or cofererent terms. For strategies, see section 4.3.1 from our paper: [Bag of What?](http://brenocon.com/handler2016phrases.pdf)
 
-#### Special configurations  
+#### Can I use `phrasemachine` with spaCy or CoreNLP? 
+ 
+Yep! By default, phrasemachine depends on [NLTK](http://www.nltk.org/) for part-of-speech
+tagging. But it can also be used with the higher accuracy
+[spaCy](https://spacy.io/) tagger, or with Stanford [CoreNLP](https://stanfordnlp.github.io/CoreNLP/). Here is an example with spaCy:
 
-phrasemachine depends on [NLTK](http://www.nltk.org/) for its part-of-speech
-tagger; it uses NLTK by default. It can also be used with the higher accuracy
-[spaCy](https://spacy.io/) tagger. To use a custom POS tagging from some other
-package, pass a list of tokens and a list of POS tags to the get_phrases method
+    $import spacy
+    $ nlp = spacy.load("en_core_web_sm")
+    $ doc = nlp(u"Barack Obama supports expanding social security.")
+    $ tokens = [token.text for token in doc]
+    $ pos = [token.pos_ for token in doc]
+    $ print(tokens)
+    ['Barack', 'Obama', 'supports', 'expanding', 'social', 'security', '.']
+    $ print(pos)
+    ['PROPN', 'PROPN', 'VERB', 'VERB', 'ADJ', 'NOUN', 'PUNCT']
+    $ phrasemachine.get_phrases(tokens=tokens, postags=pos)
+    {'num_tokens': 7, 'counts': Counter({'barack obama': 1, 'social security': 1})}
+
+Notice that when you use a custom POS tagger from some other
+package, you pass a list of tokens and a list of POS tags to the get_phrases method
 in [phrasemachine.py](py/phrasemachine/phrasemachine.py).  If you are familiar
 and comfortable with POS tagging yourself, all you really need is the
 [phrasemachine.py](py/phrasemachine/phrasemachine.py) file.
 
-In the future, we will add discussion of the following:
-- twitter pos tagger
-- normalization (Barack Obama => barack obama)
-- tokenization
-- not just noun phrases (noun-verb? adj phrases, any coordinations, verb groups?)
-- custom regex
+#### What tagsets are supported? 
 
-#### Natural language processing
+Different POS tagging schemes use different tagsets (i.e. possible POS tags). `phrasemachine` supports the following:
+
+- [Universal POS tags](https://universaldependencies.org/u/pos/)
+- [Penn Treebank tags](https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html)
+- The [Ark Coarse Tagset](http://www.cs.cmu.edu/~ark/TweetNLP/)
+
+
+#### How is `phrasemachine` different from named-entity recognition? 
 
 If you've spent some time working with text data you've probably heard of named
 entities. Maybe you’ve used tools like StanfordCoreNLP or AlchemyAPI to extract
@@ -77,6 +93,14 @@ Researchers have found the approach useful in
 phrasemachine was written by Abram Handler, Matthew J. Denny, and Brendan O'Connor.
 
 More details can be found in [this paper](http://brenocon.com/handler2016phrases.pdf): "Bag of What? Simple Noun Phrase Extraction for Text Analysis," Handler, Denny, Wallach, and O'Connor, 2016; or, [this slidedeck](http://brenocon.com/oconnor_textasdata2016.pdf).
+
+
+#### In the future, we will add discussion of the following:
+- twitter pos tagger
+- normalization (Barack Obama => barack obama)
+- tokenization
+- not just noun phrases (noun-verb? adj phrases, any coordinations, verb groups?)
+- custom regex
 
 
 #### Repository structure

@@ -17,4 +17,4 @@ def test():
 def deploy():
     local("git push --tags origin master")
     local("python setup.py sdist")
-    local("twine upload dist/phrasemachine-1.0.6.tar.gz")
+    local("twine upload dist/phrasemachine-1.0.7.tar.gz")

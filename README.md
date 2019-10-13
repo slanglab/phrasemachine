@@ -40,6 +40,7 @@ tagging. But it can also be used with the higher accuracy
 [spaCy](https://spacy.io/) tagger, or with Stanford [CoreNLP](https://stanfordnlp.github.io/CoreNLP/). Here is an example with spaCy:
 
     $ import spacy
+    $ import phrasemachine
     $ nlp = spacy.load("en_core_web_sm")
     $ doc = nlp(u"Barack Obama supports expanding social security.")
     $ tokens = [token.text for token in doc]

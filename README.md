@@ -58,6 +58,22 @@ in [phrasemachine.py](py/phrasemachine/phrasemachine.py).  If you are familiar
 and comfortable with POS tagging yourself, all you really need is the
 [phrasemachine.py](py/phrasemachine/phrasemachine.py) file.
 
+#### What if I want the token indexes for phrases? 
+
+Phrasemachine supports this.
+
+```
+$ tokens = ['Barack', 'Obama', 'supports', 'expanding', 'social', 'security', '.']
+$ pos = ['PROPN', 'PROPN', 'VERB', 'VERB', 'ADJ', 'NOUN', 'PUNCT']
+$ phrasemachine.get_phrases(tokens=tokens, postags=pos, output="token_spans")
+{'num_tokens': 7, 'token_spans': [(0, 2), (4, 6)]}
+$ out = phrasemachine.get_phrases(tokens=tokens, postags=pos, output="token_spans")
+$ start,end = out['token_spans'].pop()
+$ tokens[start:end]
+['social', 'security']
+```
+
+
 #### What tagsets are supported? 
 
 Different POS tagging schemes use different tagsets (i.e. possible POS tags). The python version of `phrasemachine` supports the following:

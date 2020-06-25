@@ -2,7 +2,7 @@ import sys,os,random
 from phrasemachine import phrasemachine as pm; reload(pm)
 text=open("sloths.txt").read()
 # text = open("testdata/wine-nltk.txt").read().decode("utf8",'ignore')
-# tt=pm.get_stdeng_spacy_tagger()
+tt=pm.get_stdeng_spacy_tagger()
 d=tt.tag_text(text)
 
 def loop():

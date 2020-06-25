@@ -5,9 +5,9 @@ represent the concept "social security"; the words "New" and "York" don't
 really represent "New York." Phrasemachine identifies these sort of multiword
 phrases automatically so you can use them in text analysis. Here's how it works in Python.
 
-    $ import phrasemachine
-    $ text = "Barack Obama supports expanding social security."
-    $ phrasemachine.get_phrases(text)
+    >>> import phrasemachine
+    >>> text = "Barack Obama supports expanding social security."
+    >>> phrasemachine.get_phrases(text)
     {'num_tokens': 7, 'counts': Counter({'barack obama': 1, 'social security': 1})}
 
 For more details, see our paper: [Bag of What?](http://brenocon.com/handler2016phrases.pdf), or [this slidedeck](http://brenocon.com/oconnor_textasdata2016.pdf).  By default, this package uses the (FilterFSA, k=8, SimpleNP) method from the paper.
@@ -39,17 +39,17 @@ Yep! By default, phrasemachine depends on [NLTK](http://www.nltk.org/) for part-
 tagging. But it can also be used with the higher accuracy
 [spaCy](https://spacy.io/) tagger, or with Stanford [CoreNLP](https://stanfordnlp.github.io/CoreNLP/). Here is an example with spaCy:
 
-    $ import spacy
-    $ import phrasemachine
-    $ nlp = spacy.load("en_core_web_sm")
-    $ doc = nlp(u"Barack Obama supports expanding social security.")
-    $ tokens = [token.text for token in doc]
-    $ pos = [token.pos_ for token in doc]
-    $ print(tokens)
+    >>> import spacy
+    >>> import phrasemachine
+    >>> nlp = spacy.load("en_core_web_sm")
+    >>> doc = nlp(u"Barack Obama supports expanding social security.")
+    >>> tokens = [token.text for token in doc]
+    >>> pos = [token.pos_ for token in doc]
+    >>> print(tokens)
     ['Barack', 'Obama', 'supports', 'expanding', 'social', 'security', '.']
-    $ print(pos)
+    >>> print(pos)
     ['PROPN', 'PROPN', 'VERB', 'VERB', 'ADJ', 'NOUN', 'PUNCT']
-    $ phrasemachine.get_phrases(tokens=tokens, postags=pos)
+    >>> phrasemachine.get_phrases(tokens=tokens, postags=pos)
     {'num_tokens': 7, 'counts': Counter({'barack obama': 1, 'social security': 1})}
 
 Notice that when you use a custom POS tagger from some other
@@ -63,13 +63,13 @@ and comfortable with POS tagging yourself, all you really need is the
 Phrasemachine supports this.
 
 ```
-$ tokens = ['Barack', 'Obama', 'supports', 'expanding', 'social', 'security', '.']
-$ pos = ['PROPN', 'PROPN', 'VERB', 'VERB', 'ADJ', 'NOUN', 'PUNCT']
-$ phrasemachine.get_phrases(tokens=tokens, postags=pos, output="token_spans")
+>>> tokens = ['Barack', 'Obama', 'supports', 'expanding', 'social', 'security', '.']
+>>> pos = ['PROPN', 'PROPN', 'VERB', 'VERB', 'ADJ', 'NOUN', 'PUNCT']
+>>> phrasemachine.get_phrases(tokens=tokens, postags=pos, output="token_spans")
 {'num_tokens': 7, 'token_spans': [(0, 2), (4, 6)]}
-$ out = phrasemachine.get_phrases(tokens=tokens, postags=pos, output="token_spans")
-$ start,end = out['token_spans'].pop()
-$ tokens[start:end]
+>>> out = phrasemachine.get_phrases(tokens=tokens, postags=pos, output="token_spans")
+>>> start,end = out['token_spans'].pop()
+>>> tokens[start:end]
 ['social', 'security']
 ```
 
